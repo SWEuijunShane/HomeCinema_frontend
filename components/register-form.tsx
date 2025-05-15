@@ -12,6 +12,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
+import axios from "axios"
+import { useRouter } from "next/navigation"
 
 export function RegisterForm({
   className,
@@ -23,19 +25,37 @@ export function RegisterForm({
     confirmPassword: "",
   })
 
+  const router = useRouter()
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match.")
       return
     }
-    console.log("Register form data:", formData)
-    // TODO: 실제 API 연동 로직
+
+    try {
+      await axios.post("http://localhost:8080/api/user/signup", {
+        email: formData.email,
+        password: formData.password,
+      })
+
+      alert("회원가입이 완료되었습니다!")
+      router.push("/login") // 로그인 페이지로 이동
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.error("에러 메시지:", err.response?.data?.message)
+      } else {
+        console.error("알 수 없는 에러", err)
+      }
+    }
   }
+    
 
   return (
     <div
