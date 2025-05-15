@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import axios from "axios"
+import axios from "@/lib/axios"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -24,7 +24,7 @@ export function LoginForm({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const response = await axios.post("http://localhost:8080/api/user/login", {
+      const response = await axios.post("/api/user/login", {
         email,
         password,
       })
@@ -89,8 +89,11 @@ export function LoginForm({
                 <Button type="submit" className="w-full">
                   Login
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button onClick={() => window.location.href = 'http://localhost:8080/oauth2/authorization/google'}>
                   Login with Google
+                </Button>
+                <Button onClick={() => {window.location.href = "http://localhost:8080/oauth2/authorization/naver"}}>
+                  Login with Naver
                 </Button>
               </div>
             </div>
