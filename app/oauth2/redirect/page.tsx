@@ -1,21 +1,25 @@
 "use client"
 
 import { useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 
-export default function OAuth2RedirectPage() {
+export default function OAuth2Redirect() {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const accessToken = searchParams.get("accessToken")
-  const refreshToken = searchParams.get("refreshToken")
 
   useEffect(() => {
-    if (accessToken && refreshToken) {
-      localStorage.setItem("accessToken", accessToken ?? "")
-      localStorage.setItem("refreshToken", refreshToken ?? "")
-      router.push("/") // 로그인 성공 후 홈으로 리디렉션
-    }
-  }, [accessToken, refreshToken])
+    const urlParams = new URLSearchParams(window.location.search)
+    const accessToken = urlParams.get("accessToken")
+    const refreshToken = urlParams.get("refreshToken")
 
-  return <div>로그인 중입니다...</div>
+    if (accessToken && refreshToken) {
+      localStorage.setItem("token", accessToken)
+      localStorage.setItem("refreshToken", refreshToken)
+
+      router.replace("/")  // 로그인 성공하면 메인 페이지로 이동
+    } else {
+      router.replace("/login") // 실패 시 로그인 페이지로 이동
+    }
+  }, [router])
+
+  return <div>로그인 처리 중...</div>
 }

@@ -74,9 +74,9 @@ const MovieList: React.FC = () => {
           <div
             key={movie.id}
             onClick={() => handleClick(movie.id)}
-            className="w-40 h-[320px] flex-shrink-0 cursor-pointer overflow-hidden transition-shadow"
+            className="w-60 h-[480px] flex-shrink-0 cursor-pointer overflow-hidden transition-shadow"
           >
-            <div className="w-full h-[240px]">
+            <div className="w-full h-[360px]">
               <img
                 src={
                   movie.poster_path
@@ -105,9 +105,9 @@ const MovieList: React.FC = () => {
           <div
           key={movie.id}
           onClick={() => handleClick(movie.id)}
-          className="w-40 h-[320px] flex-shrink-0 cursor-pointer overflow-hidden transition-shadow"
+          className="w-60 h-[480px] flex-shrink-0 cursor-pointer overflow-hidden transition-shadow"
         >
-          <div className="w-full h-[240px]">
+          <div className="w-full h-[360px]">
             <img
               src={
                 movie.poster_path
@@ -134,9 +134,9 @@ const MovieList: React.FC = () => {
           <div
           key={movie.id}
           onClick={() => handleClick(movie.id)}
-          className="w-40 h-[320px] flex-shrink-0 cursor-pointer overflow-hidden transition-shadow"
+          className="w-60 h-[480px] flex-shrink-0 cursor-pointer overflow-hidden transition-shadow"
         >
-          <div className="w-full h-[240px]">
+          <div className="w-full h-[360px]">
             <img
               src={
                 movie.poster_path
@@ -164,9 +164,9 @@ const MovieList: React.FC = () => {
           <div
           key={movie.id}
           onClick={() => handleClick(movie.id)}
-          className="w-40 h-[320px] flex-shrink-0 cursor-pointer overflow-hidden transition-shadow"
+          className="w-60 h-[480px] flex-shrink-0 cursor-pointer overflow-hidden transition-shadow"
         >
-          <div className="w-full h-[240px]">
+          <div className="w-full h-[360px]">
             <img
               src={
                 movie.poster_path
