@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import axios from "@/lib/axios"
 import { cn } from "@/lib/utils"
@@ -14,12 +15,14 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+interface LoginFormProps extends React.ComponentProps<"div"> {
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export function LoginForm({ className, setIsLoggedIn, ...props }: LoginFormProps) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -29,16 +32,14 @@ export function LoginForm({
         password,
       })
 
-      // 로그인 성공: JWT 응답 받음
       const { accessToken, refreshToken } = response.data
-      //console.log("로그인 성공!", accessToken)
       alert("로그인 성공!")
 
-      // 예: 로컬스토리지 저장
       localStorage.setItem("accessToken", accessToken)
       localStorage.setItem("refreshToken", refreshToken)
 
-      // TODO: 홈으로 리디렉션 등
+      setIsLoggedIn(true)   // 로그인 성공 상태 업데이트
+      router.replace("/")   // 메인 페이지로 이동
     } catch (err) {
       console.error("로그인 실패", err)
       alert("로그인 정보가 올바르지 않습니다.")
