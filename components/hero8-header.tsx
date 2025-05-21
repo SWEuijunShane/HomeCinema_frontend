@@ -1,11 +1,13 @@
 'use client'
+
 import Link from 'next/link'
 import axios from 'axios'
-import { Logo } from './logo'
+//import { Logo } from './logo'
+import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import React, { useEffect, useRef } from 'react'
-import { SmilePlus } from 'lucide-react'
+//import { SmilePlus } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { useRouter } from 'next/navigation'
 
@@ -28,6 +30,7 @@ export const HeroHeader = () => {
   const [searchResults, setSearchResults] = React.useState<Movie[]>([])
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null)
   const router = useRouter()
+
 
     const handleClick = (id: number) => {
     router.push(`/movie/${id}`);
@@ -72,7 +75,13 @@ export const HeroHeader = () => {
           <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
             <div className="flex w-full items-center justify-between gap-12 lg:w-auto">
               <Link href="/" aria-label="home" className="flex items-center space-x-2">
-                <Logo />
+                <Image
+                  src="/images/logo3.png" // public 디렉토리 기준
+                  alt="방구석시네마 로고"
+                  width={120}      // 원하는 크기로 조절
+                  height={50}
+                  className="h-auto w-auto"
+                />
               </Link>
 
               <button
@@ -127,8 +136,13 @@ export const HeroHeader = () => {
                   className="sm:w-40 md:w-60"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && query.trim()) {
+                      router.push(`/search?query=${encodeURIComponent(query.trim())}`)
+                    }
+                  }}
                 />
-                <Button
+                {/* <Button
                   asChild
                   variant="outline"
                   size="sm"
@@ -137,6 +151,23 @@ export const HeroHeader = () => {
                   <Link href="#">
                     <SmilePlus className="w-5 h-5" />
                   </Link>
+                </Button> */}
+
+                  {/* ✅ 로그아웃 버튼 추가 */}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    // 1. localStorage에서 토큰 제거
+                    localStorage.removeItem("accessToken")
+                    localStorage.removeItem("refreshToken")
+                    localStorage.removeItem("token")
+
+                    // 2. 로그인 페이지로 이동
+                    router.push("/login")
+                  }}
+                >
+                  로그아웃
                 </Button>
 
                 {/* 검색 결과 드롭다운 */}
