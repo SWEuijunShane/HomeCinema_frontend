@@ -29,7 +29,7 @@ export default function Page() {
 
   useEffect(() => {
     // 예: 로컬스토리지에 token이 있으면 로그인된 상태로 판단
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("accessToken")
     if (token) {
       setIsLoggedIn(true)
     } else {

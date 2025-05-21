@@ -12,7 +12,7 @@ export default function OAuth2Redirect() {
     const refreshToken = urlParams.get("refreshToken")
 
     if (accessToken && refreshToken) {
-      localStorage.setItem("token", accessToken)
+      localStorage.setItem("accessToken", accessToken)
       localStorage.setItem("refreshToken", refreshToken)
 
       router.replace("/")  // 로그인 성공하면 메인 페이지로 이동
