@@ -7,7 +7,7 @@ import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import React, { useEffect, useRef } from 'react'
-//import { SmilePlus } from 'lucide-react'
+import { SmilePlus } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { useRouter } from 'next/navigation'
 
@@ -69,8 +69,8 @@ export const HeroHeader = () => {
     <header>
       <nav
         data-state={menuState && 'active'}
-        className="bg-background/50 fixed z-20 w-full border-b backdrop-blur-3xl"
-      >
+        className="fixed top-0 z-20 w-full h-18 bg-background/50 border-b backdrop-blur-3xl">
+      
         <div className="mx-auto max-w-6xl px-6 transition-all duration-300">
           <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
             <div className="flex w-full items-center justify-between gap-12 lg:w-auto">
@@ -142,49 +142,18 @@ export const HeroHeader = () => {
                     }
                   }}
                 />
-                {/* <Button
+                <Button
                   asChild
                   variant="outline"
                   size="sm"
                   className="w-10 h-10 rounded-full p-0 flex items-center justify-center"
                 >
-                  <Link href="#">
+                  <Link href="/profile">
                     <SmilePlus className="w-5 h-5" />
                   </Link>
-                </Button> */}
-
-                  {/* ✅ 로그아웃 버튼 추가 */}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={async() => {
-                    try{
-                      // 1. 백엔드 로그아웃 API 호출
-                      await axios.post(
-                        "http://localhost:8080/api/user/logout", //실제 로그아웃 endpoint
-                        {},
-                        {
-                          headers:{
-                            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-                          },
-                        }
-                      )
-                    } catch(e){
-                      console.log("Logout API Error", e)
-                    } finally{
-                      // 2. 로컬 스토리지 토큰 삭제
-                      localStorage.removeItem("accessToken")
-                      localStorage.removeItem("refreshToken")
-                      localStorage.removeItem("token")
-
-                      // 3. 로그인 페이지 이동
-                      window.location.href = "/"
-                    }
-                  }}
-                >
-                  로그아웃
                 </Button>
 
+                  
                 {/* 검색 결과 드롭다운 */}
                 {searchResults.length > 0 && (
                   <ul className="absolute top-full left-0 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-white p-2 shadow-lg z-50 dark:bg-gray-800 dark:border-gray-700">
