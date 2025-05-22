@@ -51,7 +51,7 @@ export function RegisterForm({
       })
 
       alert("회원가입이 완료되었습니다!")
-      router.push("/login")
+      router.push("/")
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.error("에러 메시지:", err.response?.data?.message)
