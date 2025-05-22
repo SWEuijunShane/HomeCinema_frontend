@@ -90,10 +90,10 @@ export function LoginForm({ className, setIsLoggedIn, ...props }: LoginFormProps
                 <Button type="submit" className="w-full">
                   Login
                 </Button>
-                <Button onClick={() => window.location.href = 'http://localhost:8080/oauth2/authorization/google'}>
+                <Button variant="outline" onClick={() => window.location.href = 'http://localhost:8080/oauth2/authorization/google'}>
                   Login with Google
                 </Button>
-                <Button onClick={() => {window.location.href = "http://localhost:8080/oauth2/authorization/naver"}}>
+                <Button variant="outline" onClick={() => {window.location.href = "http://localhost:8080/oauth2/authorization/naver"}}>
                   Login with Naver
                 </Button>
               </div>
