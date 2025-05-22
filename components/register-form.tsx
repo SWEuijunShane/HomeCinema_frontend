@@ -24,6 +24,8 @@ export function RegisterForm({
     email: "",
     password: "",
     confirmPassword: "",
+    name: "",
+    nickname: "",
   })
 
   const router = useRouter()
@@ -44,10 +46,12 @@ export function RegisterForm({
       await customAxios.post("/api/user/signup", {
         email: formData.email,
         password: formData.password,
+        name: formData.name,
+        nickname: formData.nickname,
       })
 
       alert("회원가입이 완료되었습니다!")
-      router.push("/login") // 로그인 페이지로 이동
+      router.push("/login")
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.error("에러 메시지:", err.response?.data?.message)
@@ -56,7 +60,6 @@ export function RegisterForm({
       }
     }
   }
-    
 
   return (
     <div
@@ -67,7 +70,7 @@ export function RegisterForm({
         <CardHeader>
           <CardTitle>Create an account</CardTitle>
           <CardDescription>
-            Enter your email below to create your account
+            Enter your details to create your account
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -107,18 +110,39 @@ export function RegisterForm({
                   required
                 />
               </div>
+              <div className="grid gap-3">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="손흥민"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="grid gap-3">
+                <Label htmlFor="nickname">Nickname</Label>
+                <Input
+                  id="nickname"
+                  name="nickname"
+                  type="text"
+                  placeholder="캡틴쏘니"
+                  value={formData.nickname}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full">
                   Create Account
-                </Button>
-                <Button variant="outline" className="w-full">
-                  Sign up with Google
                 </Button>
               </div>
             </div>
             <div className="mt-4 text-center text-sm">
               Already have an account?{" "}
-              <a href="/login" className="underline underline-offset-4">
+              <a href="/ " className="underline underline-offset-4">
                 Login
               </a>
             </div>
