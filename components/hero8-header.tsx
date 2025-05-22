@@ -157,14 +157,29 @@ export const HeroHeader = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => {
-                    // 1. localStorage에서 토큰 제거
-                    localStorage.removeItem("accessToken")
-                    localStorage.removeItem("refreshToken")
-                    localStorage.removeItem("token")
+                  onClick={async() => {
+                    try{
+                      // 1. 백엔드 로그아웃 API 호출
+                      await axios.post(
+                        "http://localhost:8080/api/user/logout", //실제 로그아웃 endpoint
+                        {},
+                        {
+                          headers:{
+                            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+                          },
+                        }
+                      )
+                    } catch(e){
+                      console.log("Logout API Error", e)
+                    } finally{
+                      // 2. 로컬 스토리지 토큰 삭제
+                      localStorage.removeItem("accessToken")
+                      localStorage.removeItem("refreshToken")
+                      localStorage.removeItem("token")
 
-                    // 2. 로그인 페이지로 이동
-                    router.push("/login")
+                      // 3. 로그인 페이지 이동
+                      window.location.href = "/"
+                    }
                   }}
                 >
                   로그아웃
