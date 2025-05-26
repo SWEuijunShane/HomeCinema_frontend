@@ -1,11 +1,10 @@
-// import MovieDetail from '@/components/MovieDetail';
-
-// export default function MovieDetailPage() {
-//   return <MovieDetail />;
-// }
-
-
 import { notFound } from 'next/navigation';
+
+interface PersonSummary {
+  name: string;
+  character: string;
+  profile_path: string | null;
+}
 
 interface MovieDetail {
   id: number;
@@ -14,15 +13,15 @@ interface MovieDetail {
   poster_path: string;
   release_date: string;
   genres?: { id: number; name: string }[];
+  director?: PersonSummary | null;
+  cast?: PersonSummary[];
 }
 
-// 서버에서 API 호출 함수
 async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
   try {
     const res = await fetch(`http://localhost:8080/api/tmdb/movie/${id}`, {
-      next: { revalidate: 60 }, // ISR 캐시 (선택사항)
+      cache: 'no-store', // 🔥 revalidate와 달리 SSR에서 즉시 불러옴
     });
-
     if (!res.ok) return null;
     return await res.json();
   } catch (err) {
@@ -31,7 +30,6 @@ async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
   }
 }
 
-// SSR 페이지
 export default async function Page({ params }: { params: { id: string } }) {
   const movie = await fetchMovieDetail(params.id);
 
@@ -39,7 +37,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <main className="min-h-screen bg-gray-50 py-10 px-6 flex justify-center">
-      <div className="max-w-3xl w-full bg-white  p-6">
+      <div className="max-w-3xl w-full bg-white p-6 shadow-md rounded-lg">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">{movie.title}</h1>
 
         <div className="flex flex-col md:flex-row gap-6">
@@ -64,8 +62,50 @@ export default async function Page({ params }: { params: { id: string } }) {
             <p className="text-gray-800 leading-relaxed whitespace-pre-wrap">{movie.overview}</p>
           </div>
         </div>
+
+        {/* 감독 */}
+        {movie.director && (
+          <div className="mt-8">
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">감독</h2>
+            <div className="flex flex-col items-center gap-4">
+              {movie.director.profile_path && (
+                <img
+                  src={`https://image.tmdb.org/t/p/w185${movie.director.profile_path}`}
+                  alt={movie.director.name}
+                  className="w-18 h-24 object-cover rounded-md shadow"
+                />
+              )}
+              <span className="text-gray-700">{movie.director.name}</span>
+            </div>
+          </div>
+        )}
+
+        {/* 출연진 */}
+        {movie.cast && movie.cast.length > 0 && (
+          <div className="mt-8">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">출연진</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
+              {movie.cast.map((actor, idx) => (
+                <div key={idx} className="flex flex-col items-center text-center">
+                  {actor.profile_path ? (
+                    <img
+                      src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                      alt={actor.name}
+                      className="w-18 h-24 object-cover rounded-md shadow"
+                    />
+                  ) : (
+                    <div className="w-24 h-32 bg-gray-300 flex items-center justify-center text-sm text-white rounded-md shadow">
+                      ?
+                    </div>
+                  )}
+                  <p className="mt-2 text-sm font-medium text-gray-800">{actor.name}</p>
+                  <p className="text-xs text-gray-500">{actor.character}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </main>
   );
 }
-
