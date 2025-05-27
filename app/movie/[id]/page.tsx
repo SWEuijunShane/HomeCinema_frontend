@@ -62,49 +62,67 @@ export default async function Page({ params }: { params: { id: string } }) {
             <p className="text-gray-800 leading-relaxed whitespace-pre-wrap">{movie.overview}</p>
           </div>
         </div>
-
         {/* 감독 */}
         {movie.director && (
           <div className="mt-8">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">감독</h2>
-            <div className="flex flex-col items-center gap-4">
-              {movie.director.profile_path && (
-                <img
-                  src={`https://image.tmdb.org/t/p/w185${movie.director.profile_path}`}
-                  alt={movie.director.name}
-                  className="w-18 h-24 object-cover rounded-md shadow"
-                />
-              )}
-              <span className="text-gray-700">{movie.director.name}</span>
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">감독</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              <div className="flex flex-col items-center text-center w-20">
+                <div className="w-20 h-28 bg-white rounded-md shadow-md overflow-hidden">
+                  {movie.director.profile_path ? (
+                    <img
+                      src={`https://image.tmdb.org/t/p/w185${movie.director.profile_path}`}
+                      alt={movie.director.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gray-300 flex items-center justify-center text-lg text-white">
+                      ?
+                    </div>
+                  )}
+                </div>
+                <p className="mt-1 text-xs font-semibold text-gray-800 truncate w-full">
+                  {movie.director.name}
+                </p>
+              </div>
             </div>
           </div>
         )}
 
-        {/* 출연진 */}
+        {/* 출연진 - 가로 스크롤 */}
         {movie.cast && movie.cast.length > 0 && (
           <div className="mt-8">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">출연진</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-              {movie.cast.map((actor, idx) => (
-                <div key={idx} className="flex flex-col items-center text-center">
-                  {actor.profile_path ? (
-                    <img
-                      src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
-                      alt={actor.name}
-                      className="w-18 h-24 object-cover rounded-md shadow"
-                    />
-                  ) : (
-                    <div className="w-24 h-32 bg-gray-300 flex items-center justify-center text-sm text-white rounded-md shadow">
-                      ?
+            <div className="overflow-x-auto">
+              <div className="flex space-x-4 pb-2">
+                {movie.cast.map((actor, idx) => (
+                  <div key={idx} className="flex flex-col items-center text-center w-20 flex-shrink-0">
+                    <div className="w-20 h-28 bg-white rounded-md shadow-md overflow-hidden">
+                      {actor.profile_path ? (
+                        <img
+                          src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                          alt={actor.name} 
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-300 flex items-center justify-center text-sm text-white">
+                          ?
+                        </div>
+                      )}
                     </div>
-                  )}
-                  <p className="mt-2 text-sm font-medium text-gray-800">{actor.name}</p>
-                  <p className="text-xs text-gray-500">{actor.character}</p>
-                </div>
-              ))}
+                    <p className="mt-1 text-xs font-semibold text-gray-800 truncate w-full">{actor.name}</p>
+                    <p className="text-[10px] text-gray-500 truncate w-full">{actor.character} 역</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
+
+
+
+
+
       </div>
     </main>
   );
