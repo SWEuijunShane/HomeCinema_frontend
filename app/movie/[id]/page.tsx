@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 
 interface PersonSummary {
+  id: number;
   name: string;
   character: string;
   profile_path: string | null;
@@ -20,7 +22,7 @@ interface MovieDetail {
 async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
   try {
     const res = await fetch(`http://localhost:8080/api/tmdb/movie/${id}`, {
-      cache: 'no-store', // 🔥 revalidate와 달리 SSR에서 즉시 불러옴
+      cache: 'no-store',
     });
     if (!res.ok) return null;
     return await res.json();
@@ -62,12 +64,13 @@ export default async function Page({ params }: { params: { id: string } }) {
             <p className="text-gray-800 leading-relaxed whitespace-pre-wrap">{movie.overview}</p>
           </div>
         </div>
+
         {/* 감독 */}
         {movie.director && (
           <div className="mt-8">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">감독</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              <div className="flex flex-col items-center text-center w-20">
+              <Link href={`/person/${movie.director.id}`} className="flex flex-col items-center text-center w-20">
                 <div className="w-20 h-28 bg-white rounded-md shadow-md overflow-hidden">
                   {movie.director.profile_path ? (
                     <img
@@ -84,24 +87,28 @@ export default async function Page({ params }: { params: { id: string } }) {
                 <p className="mt-1 text-xs font-semibold text-gray-800 truncate w-full">
                   {movie.director.name}
                 </p>
-              </div>
+              </Link>
             </div>
           </div>
         )}
 
-        {/* 출연진 - 가로 스크롤 */}
+        {/* 출연진 */}
         {movie.cast && movie.cast.length > 0 && (
           <div className="mt-8">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">출연진</h2>
             <div className="overflow-x-auto">
               <div className="flex space-x-4 pb-2">
-                {movie.cast.map((actor, idx) => (
-                  <div key={idx} className="flex flex-col items-center text-center w-20 flex-shrink-0">
+                {movie.cast.map((actor) => (
+                  <Link
+                    key={actor.id}
+                    href={`/person/${actor.id}`}
+                    className="flex flex-col items-center text-center w-20 flex-shrink-0"
+                  >
                     <div className="w-20 h-28 bg-white rounded-md shadow-md overflow-hidden">
                       {actor.profile_path ? (
                         <img
                           src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
-                          alt={actor.name} 
+                          alt={actor.name}
                           className="w-full h-full object-cover"
                         />
                       ) : (
@@ -112,17 +119,12 @@ export default async function Page({ params }: { params: { id: string } }) {
                     </div>
                     <p className="mt-1 text-xs font-semibold text-gray-800 truncate w-full">{actor.name}</p>
                     <p className="text-[10px] text-gray-500 truncate w-full">{actor.character} 역</p>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
           </div>
         )}
-
-
-
-
-
       </div>
     </main>
   );
