@@ -81,7 +81,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           <Link
             key={movie.id}
             href={`/movie/${movie.id}`}
-            className="flex items-center gap-4 p-2 bg-white rounded-lg shadow-sm hover:shadow-md transition"
+            className="flex items-center gap-4 p-2 bg-white transition border-b border-gray-200 dark:border-gray-700"
           >
             <div className="w-20 h-28 bg-gray-200 flex-shrink-0 overflow-hidden rounded">
               {movie.posterPath ? (
@@ -121,7 +121,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           <Link
             key={movie.id}
             href={`/movie/${movie.id}`}
-            className="flex items-center gap-4 p-2 bg-white rounded-lg shadow-sm hover:shadow-md transition"
+            className="flex items-center gap-4 p-2 bg-white transition border-b border-gray-200 dark:border-gray-700"
           >
             <div className="w-20 h-28 bg-gray-200 flex-shrink-0 overflow-hidden rounded">
               {movie.posterPath ? (
