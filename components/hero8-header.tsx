@@ -18,6 +18,13 @@ interface Movie {
   release_date: string
 }
 
+interface Person {
+  id: number
+  name: string
+  profile_path: string | null
+  known_for_department?: string
+}
+
 const menuItems = [
   { name: '캘린더', href: '#link' },
   { name: '친구목록', href: '#link' },
@@ -27,29 +34,31 @@ const menuItems = [
 
 export const HeroHeader = () => {
   const [query, setQuery] = React.useState('')
-  const [searchResults, setSearchResults] = React.useState<Movie[]>([])
+  //const [searchResults, setSearchResults] = React.useState<Movie[]>([])
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null)
   const router = useRouter()
 
+  const [movies, setMovies] = React.useState<Movie[]>([])
+  const [people, setPeople] = React.useState<Person[]>([])
 
-    const handleClick = (id: number) => {
-    router.push(`/movie/${id}`);
-  };
 
-  const handleSearch = async () => {
-    if (!query.trim()) {
-      setSearchResults([])
-      return
-    }
-    try {
-      const res = await axios.get<{ results: Movie[] }>('http://localhost:8080/api/tmdb/search', {
-        params: { query },
-      })
-      setSearchResults(res.data.results)
-    } catch (err) {
-      console.error('검색 실패:', err)
-    }
+const handleSearch = async () => {
+  if (!query.trim()) {
+    setMovies([])
+    setPeople([])
+    return
   }
+  try {
+    const res = await axios.get<{ movies: Movie[]; people: Person[] }>('http://localhost:8080/api/tmdb/search', {
+      params: { query },
+    })
+    setMovies(res.data.movies || [])
+    setPeople(res.data.people || [])
+  } catch (err) {
+    console.error('검색 실패:', err)
+  }
+}
+
 
   useEffect(() => {
     if (debounceTimeout.current) clearTimeout(debounceTimeout.current)
@@ -155,22 +164,35 @@ export const HeroHeader = () => {
 
                   
                 {/* 검색 결과 드롭다운 */}
-                {searchResults.length > 0 && (
-                  <ul className="absolute top-full left-0 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-white p-2 shadow-lg z-50 dark:bg-gray-800 dark:border-gray-700">
-                    {searchResults.map((movie) => (
-                      <li
-                        key={movie.id}
-                        className="cursor-pointer rounded p-2 hover:bg-gray-200 dark:hover:bg-gray-700"
-                        onClick={() => handleClick(movie.id)}
-                      >
-                        <h3 className="font-semibold text-sm">{movie.title}</h3>
-                        <p className="text-xs text-muted-foreground">
-                          출시일: {movie.release_date}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                {(movies.length > 0 || people.length > 0) && (
+  <ul className="absolute top-full left-0 mt-1 max-h-80 w-full overflow-auto rounded-md border bg-white p-2 shadow-lg z-50 dark:bg-gray-800 dark:border-gray-700 space-y-2">
+    
+    {/* 영화 섹션 */}
+    {movies.map((movie) => (
+      <li
+        key={`movie-${movie.id}`}
+        className="cursor-pointer rounded p-2 hover:bg-gray-200 dark:hover:bg-gray-700"
+        onClick={() => router.push(`/movie/${movie.id}`)}
+      >
+        <div className="text-sm font-semibold">{movie.title}</div>
+        <div className="text-xs text-muted-foreground">{movie.release_date}</div>
+      </li>
+    ))}
+
+    {/* 인물 섹션 */}
+    {people.map((person) => (
+      <li
+        key={`person-${person.id}`}
+        className="cursor-pointer rounded p-2 hover:bg-gray-200 dark:hover:bg-gray-700"
+        onClick={() => router.push(`/person/${person.id}`)}
+      >
+        <div className="text-sm font-semibold">{person.name}</div>
+        <div className="text-xs text-muted-foreground">{person.known_for_department || '인물'}</div>
+      </li>
+    ))}
+  </ul>
+)}
+
               </div>
             </div>
           </div>
