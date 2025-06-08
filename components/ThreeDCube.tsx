@@ -31,7 +31,7 @@ function ThreeDModel() {
     const loader = new GLTFLoader();
     let model: THREE.Object3D;
 
-    loader.load('/models/male_model.glb', (gltf) => {
+    loader.load('/models/male_model2.glb', (gltf) => {
       model = gltf.scene;
       model.scale.set(1, 1, 1); // 필요 시 크기 조절
       scene.add(model);
