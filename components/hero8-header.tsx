@@ -157,7 +157,7 @@ const handleSearch = async () => {
                   size="sm"
                   className="w-10 h-10 rounded-full p-0 flex items-center justify-center"
                 >
-                  <Link href="/profile">
+                  <Link href="/user/profile">
                     <SmilePlus className="w-5 h-5" />
                   </Link>
                 </Button>
