@@ -6,6 +6,8 @@ import Profile from "@/components/profile"
 import EditProfileForm from "@/components/edit-profile-form"
 import { Button } from "@/components/ui/button"
 import axios from "axios"
+import { useRouter } from 'next/navigation';
+
 
 type UserInfo = {
   email: string
@@ -16,6 +18,7 @@ type UserInfo = {
 export default function ProfilePage() {
   const [user, setUser] = useState<UserInfo | null>(null)
   const [isEditing, setIsEditing] = useState(false)
+  const router = useRouter();
 
   const fetchUserInfo = async () => {
     try {
@@ -91,6 +94,26 @@ export default function ProfilePage() {
 
         </>
       )}
+          <div className="mt-6 flex justify-between gap-2">
+            <Button
+              onClick={() => router.push('/user/wantToWatch')}
+              className="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
+              보고싶어요 목록 보기
+            </Button>
+            <Button
+              onClick={() => router.push('/user/rating')}
+              className="flex-1 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+            >
+              내 별점 영화 보기
+            </Button>
+            <Button
+              onClick={() => router.push('/user/review')}
+              className="flex-1 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+            >
+              내가 쓴 리뷰 보기
+            </Button>
+          </div>
     </div>
     
   )
