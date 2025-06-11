@@ -1,5 +1,10 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import MyReviewSection from './MyReviewSection';
+import ReviewModalTrigger from './ReviewModalTrigger';
+
+
+
 
 interface PersonSummary {
   id: number;
@@ -34,6 +39,8 @@ async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
 
 export default async function Page({ params }: { params: { id: string } }) {
   const movie = await fetchMovieDetail(params.id);
+    const movieId = Number(params.id);  // 🔥 여기 중요
+
 
   if (!movie) return notFound();
 
@@ -63,7 +70,23 @@ export default async function Page({ params }: { params: { id: string } }) {
 
             <p className="text-gray-800 leading-relaxed whitespace-pre-wrap">{movie.overview}</p>
           </div>
+
+          
+
         </div>
+
+        <div>
+
+          <ReviewModalTrigger movieId={movieId} />
+          <MyReviewSection movieId={movieId} /> {/* ✅ 따로 만든 내 리뷰 섹션 */}
+
+        </div>
+
+
+
+
+
+
 
         {/* 감독 */}
         {movie.director && (
