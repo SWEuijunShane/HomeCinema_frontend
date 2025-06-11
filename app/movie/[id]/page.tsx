@@ -1,8 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import MyReviewSection from './MyReviewSection';
-import ReviewModalTrigger from './ReviewModalTrigger';
-
+import MyReviewSection from '@/app/movie/[id]/MyReviewSection';
+import ReviewModalTrigger from '@/app/movie/[id]/ReviewModalTrigger';
 
 
 
@@ -79,6 +78,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
           <ReviewModalTrigger movieId={movieId} />
           <MyReviewSection movieId={movieId} /> {/* ✅ 따로 만든 내 리뷰 섹션 */}
+
 
         </div>
 

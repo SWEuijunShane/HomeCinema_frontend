@@ -54,6 +54,8 @@ export default function ReviewSection({ movieId, onReviewUpdated }: Props) {
     if (!token) return;
 
     const fetchReview = async () => {
+      if (!token) return;
+
       setIsLoading(true);
       try {
         const res = await axios.get(`http://localhost:8080/api/reviews/my/${movieId}`, {
@@ -110,13 +112,13 @@ export default function ReviewSection({ movieId, onReviewUpdated }: Props) {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert('리뷰가 수정되었습니다!');
-window.location.reload();
+        window.location.href = '/';
       } else {
         await axios.post(`http://localhost:8080/api/reviews/create`, payload, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert('리뷰가 작성되었습니다!');
-window.location.reload();
+        window.location.href = '/';
       }
 
       if (onReviewUpdated) onReviewUpdated();
@@ -141,7 +143,7 @@ window.location.reload();
         headers: { Authorization: `Bearer ${token}` },
       });
       alert('리뷰가 삭제되었습니다!');
-window.location.reload();
+      window.location.href = '/';
       setReviewData(null);
       setContent('');
       setEmotionIds([]);
