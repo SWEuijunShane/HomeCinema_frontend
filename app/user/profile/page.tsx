@@ -44,7 +44,7 @@ export default function ProfilePage() {
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow pt-20 pb-20">
       {isEditing ? (
         <>
-          <h1 className="text-xl font-bold mb-4 text-center">회원정보 수정</h1>
+          <h1 className="text-xl font-bold mb-4 text-center">닉네임 수정</h1>
           <EditProfileForm
             onSuccess={() => {
               setIsEditing(false)
@@ -62,59 +62,83 @@ export default function ProfilePage() {
           >
             회원정보 수정
           </Button>
-         <div className="mt-6 flex justify-center">
-    <Button
-      variant="ghost"
-      size="sm"
-      className="w-2/3 bg-transparent hover:bg-transparent active:bg-transparent focus:bg-transparent ring-0 outline-none shadow-none"
-      onClick={async () => {
-        try {
-          await axios.post(
-            "http://localhost:8080/api/user/logout",
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-              },
-            }
-          )
-        } catch (e) {
-          console.log("Logout API Error", e)
-        } finally {
-          localStorage.removeItem("accessToken")
-          localStorage.removeItem("refreshToken")
-          localStorage.removeItem("token")
-          window.location.href = "/"
-        }
-      }}
-    >
-      로그아웃
-    </Button>
-  </div>
 
+          {/* 로그아웃 / 회원탈퇴 */}
+          <div className="mt-6 flex justify-center items-center text-sm text-gray-600 space-x-2">
+            <button
+              onClick={async () => {
+                try {
+                  await axios.post(
+                    "http://localhost:8080/api/user/logout",
+                    {},
+                    {
+                      headers: {
+                        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                      },
+                    }
+                  )
+                } catch (e) {
+                  console.log("Logout API Error", e)
+                } finally {
+                  localStorage.removeItem("accessToken")
+                  localStorage.removeItem("refreshToken")
+                  localStorage.removeItem("token")
+                  window.location.href = "/"
+                }
+              }}
+              className="hover:underline"
+            >
+              로그아웃
+            </button>
+
+            <span className="text-gray-400">|</span>
+
+            <button
+              onClick={async () => {
+                const confirmDelete = confirm("정말 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.");
+                if (!confirmDelete) return;
+
+                try {
+                  await axios.delete("http://localhost:8080/api/user/delete", {
+                    headers: {
+                      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                    },
+                  });
+                  alert("회원 탈퇴가 완료되었습니다.");
+                } catch (err) {
+                  console.error("회원 탈퇴 실패", err);
+                  alert("회원 탈퇴 중 오류가 발생했습니다.");
+                  return;
+                } finally {
+                  localStorage.removeItem("accessToken");
+                  localStorage.removeItem("refreshToken");
+                  localStorage.removeItem("token");
+                  window.location.href = "/";
+                }
+              }}
+              className="text-gray-600 hover:underline"
+            >
+              회원탈퇴
+            </button>
+          </div>
+
+          {/* 아이콘 메뉴 */}
+          <div className="mt-12 flex justify-center gap-12">
+            <div className="flex flex-col items-center cursor-pointer" onClick={() => router.push('/user/wantToWatch')}>
+              <img src="/images/myMovie.png" alt="내 영화" className="w-15 h-15 mb-1" />
+              <span className="text-sm text-gray-700">내 영화</span>
+            </div>
+            <div className="flex flex-col items-center cursor-pointer" onClick={() => router.push('/user/rating')}>
+              <img src="/images/myRating.png" alt="내 별점" className="w-15 h-15 mb-1" />
+              <span className="text-sm text-gray-700">내 별점</span>
+            </div>
+            <div className="flex flex-col items-center cursor-pointer" onClick={() => router.push('/user/review')}>
+              <img src="/images/myReview.png" alt="내 리뷰" className="w-15 h-15 mb-1" />
+              <span className="text-sm text-gray-700">내 리뷰</span>
+            </div>
+          </div>
         </>
       )}
-          <div className="mt-6 flex justify-between gap-2">
-            <Button
-              onClick={() => router.push('/user/wantToWatch')}
-              className="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-            >
-              보고싶어요 목록 보기
-            </Button>
-            <Button
-              onClick={() => router.push('/user/rating')}
-              className="flex-1 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-            >
-              내 별점 영화 보기
-            </Button>
-            <Button
-              onClick={() => router.push('/user/review')}
-              className="flex-1 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
-            >
-              내가 쓴 리뷰 보기
-            </Button>
-          </div>
     </div>
-    
   )
 }
