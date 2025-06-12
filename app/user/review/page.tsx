@@ -2,12 +2,17 @@
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Link from 'next/link';
+
 
 interface ReviewListResponseDto {
   content: string;
   gifPath: string;
   userNickname: string;
   emotions: string[];
+  movieId: number;
+  movieTitle: string;
+  posterPath: string;
 }
 
 export default function UserReviewPage() {
@@ -52,25 +57,41 @@ export default function UserReviewPage() {
       {reviews.length === 0 ? (
         <p>작성한 리뷰가 없습니다.</p>
       ) : (
-        <ul className="space-y-4">
+        <ul className="space-y-6">
           {reviews.map((review, index) => (
-            <li key={index} className="p-4 bg-white shadow rounded">
-              <div className="flex items-center gap-4 mb-2">
-                <img
-                  src={review.gifPath}
-                  alt="감정 GIF"
-                  className="w-16 h-16 rounded object-cover"
-                />
-                <div>
-                  <p className="text-sm text-gray-600">@{review.userNickname}</p>
-                  <p className="font-medium">{review.content}</p>
-                </div>
+            <li key={index} className="p-4 bg-gray-50 rounded">
+              {/* 닉네임 표시 */}
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-sm text-gray-600 font-semibold">@{review.userNickname}</p>
               </div>
-              <div className="flex flex-wrap gap-2 mt-2">
+
+              {/* 구분선 */}
+              <hr className="my-2" />
+
+              {/* 영화 포스터 + 제목 */}
+              <div className="flex gap-4 items-start mb-4">
+<Link href={`/movie/${review.movieId}`} className="flex gap-4 items-start hover:opacity-90">
+    <img
+      src={`https://image.tmdb.org/t/p/w154${review.posterPath}`}
+      alt={review.movieTitle}
+      className="w-20 h-28 object-cover rounded"
+    />
+    <div>
+      <h2 className="text-md font-bold mb-4">{review.movieTitle}</h2>
+      {/* 한줄평 */}
+      <p className="text-gray-800 text-sm mb-2">{review.content}</p>
+    </div>
+  </Link>
+              </div>
+
+              <hr className="my-2" />
+
+              {/* 감정 해시태그 */}
+              <div className="flex flex-wrap gap-2">
                 {review.emotions.map((emotion, i) => (
                   <span
                     key={i}
-                    className="px-2 py-1 text-sm bg-blue-100 text-blue-700 rounded-full"
+                    className="px-2 py-1 text-xs bg-gray-200 text-gray-700 rounded-full"
                   >
                     #{emotion}
                   </span>

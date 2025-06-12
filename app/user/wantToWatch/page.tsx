@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Link from 'next/link'; // ✅ 링크 추가
 
 interface MovieDto {
   id: number;
   title: string;
-  poster_path: string;      
+  poster_path: string;
   overview: string;
   release_date: string;
   vote_average: number;
@@ -54,20 +55,19 @@ export default function WantToWatchPage() {
       {movies.length === 0 ? (
         <p>보고싶어요 목록이 비어 있습니다.</p>
       ) : (
-        <ul className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 gap-4">
           {movies.map((movie) => (
-            <li key={movie.id} className="bg-white shadow p-2 rounded">
+            <Link key={movie.id} href={`/movie/${movie.id}`} className="text-center">
               <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} 
+                src={`https://image.tmdb.org/t/p/w154${movie.poster_path}`}
                 alt={movie.title}
-                className="w-full h-64 object-cover mb-2"
+                className="w-full max-w-[154px] h-auto mx-auto rounded hover:opacity-90 transition"
               />
-              <h2 className="text-base font-semibold">{movie.title}</h2>
-              <p className="text-sm text-gray-500">{movie.release_date}</p>
-              <p className="text-sm text-yellow-600">⭐ {movie.vote_average}</p>
-            </li>
+              <h2 className="text-sm mt-1 truncate">{movie.title}</h2>
+              <p className="text-xs text-yellow-600">⭐ {movie.vote_average}</p>
+            </Link>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

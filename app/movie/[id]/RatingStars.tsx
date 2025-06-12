@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function RatingStars({ movieId }: Props) {
-  const [rating, setRating] = useState<number | null>(null);
+  const [rating, setRating] = useState<number>(0);
   const [token, setToken] = useState<string | null>(null);
   const [editMode, setEditMode] = useState(false);
 
@@ -29,7 +29,7 @@ export default function RatingStars({ movieId }: Props) {
 
       const found = res.data.find((item: any) => item.movieId === movieId);
       if (found) setRating(found.rating);
-      else setRating(null); // 없는 경우 null로 초기화
+      else setRating(0);
     } catch (err) {
       console.error('내 평점 불러오기 실패:', err);
     }
@@ -44,49 +44,66 @@ export default function RatingStars({ movieId }: Props) {
         params: { rating: value },
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(`⭐️ ${value}점 평점 저장 완료`);
-      setEditMode(false); // 저장 후 보기 모드로 전환
+      setEditMode(false);
     } catch (err) {
       console.error('평점 저장 실패:', err);
     }
   };
 
-  const handleEditToggle = async () => {
-    // 편집 버튼 누르면 초기화하고 서버에서 다시 GET
-    setRating(null);
-    setEditMode(true);
-    await fetchRating(token); // 최신 평점 불러오기
+  const handleEditToggle = () => {
+    setEditMode((prev) => !prev);
+  };
+
+  const renderStars = () => {
+    const stars = [];
+
+    for (let i = 1; i <= 5; i++) {
+      const full = i <= rating;
+      const half = i - 0.5 === rating;
+
+      stars.push(
+        <span key={i} className="relative w-6 h-6 inline-block">
+          {/* 클릭 영역 */}
+          {editMode && (
+            <>
+              <span
+                onClick={() => handleRatingChange(i - 0.5)}
+                className="absolute left-0 top-0 w-1/2 h-full z-10 cursor-pointer"
+              />
+              <span
+                onClick={() => handleRatingChange(i)}
+                className="absolute right-0 top-0 w-1/2 h-full z-10 cursor-pointer"
+              />
+            </>
+          )}
+
+          {/* 별 출력 */}
+          {full ? (
+            <span className="text-yellow-400 text-2xl">★</span>
+          ) : half ? (
+            <img
+              src="/images/half.jpg"
+              alt="half star"
+              className="w-6 h-6 object-contain"
+            />
+          ) : (
+            <span className="text-gray-300 text-2xl">★</span>
+          )}
+        </span>
+      );
+    }
+
+    return stars;
   };
 
   return (
-    <div className="flex items-center gap-4">
-      <div className="flex gap-1 text-3xl select-none">
-        {[1, 2, 3, 4, 5].map((num) => (
-          <span
-            key={num}
-            onClick={() => editMode && handleRatingChange(num)}
-            className={`cursor-pointer transition ${
-              num <= (rating ?? 0) ? 'text-yellow-400' : 'text-gray-300'
-            } ${!editMode ? 'cursor-default' : ''}`}
-          >
-            ★
-          </span>
-        ))}
-      </div>
-
-      {/* ✏️ 편집 / 취소 버튼 */}
+    <div className="flex items-center gap-3">
+      <div className="flex gap-0.5 select-none">{renderStars()}</div>
       <button
-        onClick={() => {
-          if (editMode) {
-            setEditMode(false);
-            fetchRating(token); // 취소할 때도 다시 GET
-          } else {
-            handleEditToggle(); // 위에서 초기화 + fetch
-          }
-        }}
-        className="text-[8px] text-gray-500 underline hover:text-gray-700 mt-4"
+        onClick={handleEditToggle}
+        className="text-[10px] text-gray-500 underline hover:text-gray-700 mt-2"
       >
-        {editMode ? '취소' : '편집'}
+        {editMode ? '완료' : '편집'}
       </button>
     </div>
   );
