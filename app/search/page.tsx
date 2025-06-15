@@ -20,6 +20,14 @@ interface Person {
   known_for_department?: string
 }
 
+interface User {
+  id: number;
+  nickname: string;
+  reviewCount: number;
+  ratedCount: number;
+  profileImageUrl: string | null;
+}
+
 
 export default function SearchPage() {
   const searchParams = useSearchParams()
@@ -28,6 +36,7 @@ export default function SearchPage() {
 
   const [movies, setMovies] = useState<Movie[]>([])
   const [people, setPeople] = useState<Person[]>([])
+  const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -41,11 +50,13 @@ export default function SearchPage() {
         const res = await axios.get<{
           movies: Movie[]
           people: Person[]
+          users: User[]
         }>('http://localhost:8080/api/tmdb/search', {
           params: { query },
         })
         setMovies(res.data.movies || [])
         setPeople(res.data.people || [])
+        setUsers(res.data.users || [])
       } catch (err) {
         console.error('검색 실패:', err)
       } finally {
@@ -58,7 +69,7 @@ export default function SearchPage() {
 
   if (loading) return <p className="p-4">🔍 검색 중입니다...</p>
 
- return (
+  return (
     <div className="max-w-5xl mx-auto px-4 py-6">
       <h1 className="text-2xl font-bold mb-4">🔎 &quot;{query}&quot; 검색 결과</h1>
 
@@ -121,6 +132,36 @@ export default function SearchPage() {
           ))}
         </ul>
       )}
+
+      {/* 👤 유저 결과 */}
+      <h2 className="text-xl font-semibold mt-6 mb-2">👥 유저</h2>
+      {users.length === 0 ? (
+        <p>유저 결과가 없습니다.</p>
+      ) : (
+        <ul className="space-y-4">
+          {users.map((user) => (
+            <li key={user.id} className="flex items-center justify-between p-3 border rounded">
+              <div className="flex items-center gap-3 cursor-pointer" onClick={() => router.push(`/profile/${user.id}`)}>
+                <img
+                  src={user.profileImageUrl || '/default-profile.png'}
+                  alt={user.nickname}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <div>
+                  <p className="font-semibold">{user.nickname}</p>
+                  <p className="text-sm text-gray-500">
+                    리뷰 {user.reviewCount}개 · 평점 {user.ratedCount}개
+                  </p>
+                </div>
+              </div>
+
+              {/* 팔로우/언팔 버튼은 이후 단계에서 추가 */}
+              {/* <FollowButton userId={user.id} /> */}
+            </li>
+          ))}
+        </ul>
+      )}
+
     </div>
   )
 }
