@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import FollowButton from '@/components/FollowButton'
 
 interface Movie {
   id: number
@@ -38,6 +39,29 @@ export default function SearchPage() {
   const [people, setPeople] = useState<Person[]>([])
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
+  const [myId, setMyId] = useState<number | null>(null)
+
+  useEffect(() => {
+    const fetchMyId = async () => {
+      try {
+        const token = localStorage.getItem('accessToken')
+        if (!token) return
+
+        const res = await axios.get<{ id: number }>(
+          'http://localhost:8080/api/user/me',
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        setMyId(res.data.id)
+      } catch (err) {
+        console.error('내 ID 불러오기 실패:', err)
+      }
+    }
+
+    fetchMyId()
+  }, [])
+
 
   useEffect(() => {
     if (!query) {
@@ -135,7 +159,7 @@ export default function SearchPage() {
 
       {/* 👤 유저 결과 */}
       <h2 className="text-xl font-semibold mt-6 mb-2">👥 유저</h2>
-      {users.length === 0 ? (
+      {users.length === 0 || myId === null ? (
         <p>유저 결과가 없습니다.</p>
       ) : (
         <ul className="space-y-4">
@@ -143,7 +167,7 @@ export default function SearchPage() {
             <li key={user.id} className="flex items-center justify-between p-3 border rounded">
               <div className="flex items-center gap-3 cursor-pointer" onClick={() => router.push(`/profile/${user.id}`)}>
                 <img
-                  src={user.profileImageUrl || '/default-profile.png'}
+                  src={user.profileImageUrl || '/images/default-profile.png'}
                   alt={user.nickname}
                   className="w-12 h-12 rounded-full object-cover"
                 />
@@ -155,8 +179,8 @@ export default function SearchPage() {
                 </div>
               </div>
 
-              {/* 팔로우/언팔 버튼은 이후 단계에서 추가 */}
-              {/* <FollowButton userId={user.id} /> */}
+              {/* ✅ 자기 자신이 아니면 팔로우 버튼 렌더링 */}
+              {user.id !== myId && <FollowButton userId={user.id} />}
             </li>
           ))}
         </ul>
