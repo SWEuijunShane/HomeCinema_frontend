@@ -136,6 +136,10 @@ export default function ProfilePage() {
               <img src="/images/myReview.png" alt="내 리뷰" className="w-15 h-15 mb-1" />
               <span className="text-sm text-gray-700">내 리뷰</span>
             </div>
+            <div className="flex flex-col items-center cursor-pointer" onClick={() => router.push('/friend/list')}>
+              <img src="/images/default-profile.png" alt="팔로우" className="w-15 h-15 mb-1" />
+              <span className="text-sm text-gray-700">팔로우</span>
+            </div>
           </div>
         </>
       )}
