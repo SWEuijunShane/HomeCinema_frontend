@@ -26,8 +26,8 @@ interface Person {
 }
 
 const menuItems = [
-  { name: '캘린더', href: '#link' },
-  { name: '친구목록', href: '#link' },
+  { name: '친구목록', href: '/friend/list' },
+  { name: '친구소식', href: '/friend/activity' },
   { name: '영화추천', href: '/recommend' },
   { name: '취향분석', href: '/taste' },
 ]
