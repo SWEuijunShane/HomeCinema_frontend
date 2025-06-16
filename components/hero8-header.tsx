@@ -28,8 +28,8 @@ interface Person {
 const menuItems = [
   { name: '캘린더', href: '#link' },
   { name: '친구목록', href: '#link' },
-  { name: '영화추천', href: '#link' },
-  { name: '취향분석', href: '#link' },
+  { name: '영화추천', href: '/recommend' },
+  { name: '취향분석', href: '/taste' },
 ]
 
 export const HeroHeader = () => {
