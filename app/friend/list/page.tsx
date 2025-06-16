@@ -50,7 +50,7 @@ export default function SocialPage() {
     <li key={user.userId} className="flex items-center justify-between p-3 border rounded">
       <div
         className="flex items-center gap-3 cursor-pointer"
-        onClick={() => router.push(`/profile/${user.userId}`)}
+        onClick={() => router.push(`/otherUser/${user.userId}/profile`)}
       >
         <img
           src={user.profileImageUrl || '/images/default-profile.png'}

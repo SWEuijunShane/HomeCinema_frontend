@@ -165,7 +165,7 @@ export default function SearchPage() {
         <ul className="space-y-4">
           {users.map((user) => (
             <li key={user.id} className="flex items-center justify-between p-3 border rounded">
-              <div className="flex items-center gap-3 cursor-pointer" onClick={() => router.push(`/profile/${user.id}`)}>
+              <div className="flex items-center gap-3 cursor-pointer" onClick={() => router.push(`/otherUser/${user.id}/profile`)}>
                 <img
                   src={user.profileImageUrl || '/images/default-profile.png'}
                   alt={user.nickname}
