@@ -56,9 +56,13 @@ export default function OtherUserProfilePage() {
       <h1 className="text-xl font-bold mb-2">{user.nickname}</h1>
       <FollowButton userId={user.userId} />
 
-      <p className="mt-4 text-sm text-gray-600">
+      <p
+        className="mt-4 text-sm text-gray-600 cursor-pointer hover:underline"
+        onClick={() => router.push(`/friend/list/${user.userId}`)}
+      >
         팔로워 <b>{user.followerCount}</b> · 팔로잉 <b>{user.followingCount}</b>
       </p>
+
 
       <div className="mt-6 flex justify-around text-sm text-gray-700">
         <div onClick={() => router.push(`/otherUser/${user.userId}/rating`)} className="cursor-pointer">
