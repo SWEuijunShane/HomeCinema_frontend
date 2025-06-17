@@ -141,7 +141,7 @@ const handleSearch = async () => {
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit relative">
                 <Input
                   type="search"
-                  placeholder="영화 검색"
+                  placeholder="영화, 배우, 인물 검색"
                   className="sm:w-40 md:w-60"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
@@ -161,6 +161,35 @@ const handleSearch = async () => {
                     <SmilePlus className="w-5 h-5" />
                   </Link>
                 </Button>
+
+
+{/* 로그아웃 텍스트 링크 */}
+<button
+  onClick={async () => {
+    try {
+      await axios.post(
+        "http://localhost:8080/api/user/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
+    } catch (e) {
+      console.log("Logout API Error", e)
+    } finally {
+      localStorage.removeItem("accessToken")
+      localStorage.removeItem("refreshToken")
+      localStorage.removeItem("token")
+      window.location.href = "/"
+    }
+  }}
+  className="ml-3 text-sm text-gray-600 hover:underline"
+>
+  로그아웃
+</button>
+                
 
                   
                 {/* 검색 결과 드롭다운 */}
