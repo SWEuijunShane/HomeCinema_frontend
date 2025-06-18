@@ -7,7 +7,7 @@ import Link from 'next/link';
 interface FriendActivity {
   userId: number;
   nickname: string;
-  activityType: 'REVIEW' | 'RATING' | 'WISHLIST';
+  activityType: 'REVIEW' | 'RATING' | 'WISHLIST' | 'BADGE';
   movieId: number;
   movieTitle: string;
   moviePosterPath: string;
@@ -63,43 +63,56 @@ export default function FriendActivityPage() {
                 <p className="text-sm text-gray-600 font-semibold">@{activity.nickname}</p>
                 <span className="text-xs text-gray-400">{formatTime(activity.createdAt)}</span>
               </div>
-              <div className="text-xs bg-gray-200 text-gray-600 inline-block px-2 py-1 rounded mb-2">
-                {activity.activityType === 'REVIEW' && '✏️ 리뷰 작성'}
-                {activity.activityType === 'RATING' && '⭐ 평점'}
-                {activity.activityType === 'WISHLIST' && '📝 보고싶어요'}
-              </div>
+              {/* BADGE 타입일 경우 별도 표시 */}
+              {activity.activityType === 'BADGE' ? (
+                <div className="text-center py-6">
+                  <p className="text-gray-700 text-sm">
+                    🏅 <strong>@{activity.nickname}</strong>님이{' '}
+                    <strong>“{activity.content}”</strong> 뱃지를 획득했어요!
+                  </p>
+                </div>
+              ) : (
+                <>
+                  {/* 활동 타입 라벨 */}
+                  <div className="text-xs bg-gray-200 text-gray-600 inline-block px-2 py-1 rounded mb-2">
+                    {activity.activityType === 'REVIEW' && '✏️ 리뷰 작성'}
+                    {activity.activityType === 'RATING' && '⭐ 평점'}
+                    {activity.activityType === 'WISHLIST' && '📝 보고싶어요'}
+                  </div>
 
-              <hr className="my-2" />
+                  <hr className="my-2" />
 
-              <Link href={`/movie/${activity.movieId}`} className="flex gap-4 items-start hover:opacity-90">
-                <img
-                  src={`https://image.tmdb.org/t/p/w154${activity.moviePosterPath}`}
-                  alt={activity.movieTitle}
-                  className="w-20 h-28 object-cover rounded"
-                />
-                <div>
-                  <h2 className="text-md font-bold mb-4">{activity.movieTitle}</h2>
-                  {activity.content && (
-                    <p className="text-gray-800 text-sm mb-2">{activity.content}</p>
+                  <Link href={`/movie/${activity.movieId}`} className="flex gap-4 items-start hover:opacity-90">
+                    <img
+                      src={`https://image.tmdb.org/t/p/w154${activity.moviePosterPath}`}
+                      alt={activity.movieTitle}
+                      className="w-20 h-28 object-cover rounded"
+                    />
+                    <div>
+                      <h2 className="text-md font-bold mb-4">{activity.movieTitle}</h2>
+                      {activity.content && (
+                        <p className="text-gray-800 text-sm mb-2">{activity.content}</p>
+                      )}
+                    </div>
+                  </Link>
+
+                  {/* 감정 키워드: REVIEW 타입일 때만 */}
+                  {activity.activityType === 'REVIEW' && activity.content && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {/* 백엔드에서 감정 키워드 추출하면 배열로 내려주도록 추가하고 여기에 매핑 */}
+                      {/* 예: ['감동적인', '웃긴'] */}
+                      {/* 아래는 예시용 하드코딩 */}
+                      {['감동적인', '생각하게 되는'].map((emotion, i) => (
+                        <span
+                          key={i}
+                          className="px-2 py-1 text-xs bg-gray-200 text-gray-700 rounded-full"
+                        >
+                          #{emotion}
+                        </span>
+                      ))}
+                    </div>
                   )}
-                </div>
-              </Link>
-
-              {/* 감정 키워드: REVIEW 타입일 때만 */}
-              {activity.activityType === 'REVIEW' && activity.content && (
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {/* 백엔드에서 감정 키워드 추출하면 배열로 내려주도록 추가하고 여기에 매핑 */}
-                  {/* 예: ['감동적인', '웃긴'] */}
-                  {/* 아래는 예시용 하드코딩 */}
-                  {['감동적인', '생각하게 되는'].map((emotion, i) => (
-                    <span
-                      key={i}
-                      className="px-2 py-1 text-xs bg-gray-200 text-gray-700 rounded-full"
-                    >
-                      #{emotion}
-                    </span>
-                  ))}
-                </div>
+                </>
               )}
             </li>
           ))}
