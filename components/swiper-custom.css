@@ -1,0 +1,23 @@
+.custom-coverflow-swiper .swiper-slide {
+  width: 240px;     /* ⬅️ 더 넓게 */
+  height: 320px;    /* ⬅️ 더 높게 */
+  opacity: 0.3;
+  transform: scale(0.7);
+  transition: all 0.4s ease;
+  filter: blur(1px);
+}
+
+.custom-coverflow-swiper .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+}
+
+.custom-coverflow-swiper .swiper-slide-active {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+  filter: none !important;
+  z-index: 10;
+}

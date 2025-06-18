@@ -1,193 +1,129 @@
 'use client';
 
-
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'; // ✅ 올바른 import
-
-
 import axios from 'axios';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCoverflow } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import './swiper-custom.css';
 
 interface Movie {
   id: number;
   title: string;
   poster_path: string | null;
-  release_date: string;
+  release_date?: string;
 }
 
-const MovieList: React.FC = () => {
-  const [popularMovies, setPopularMovies] = useState<Movie[]>([]);
-  const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([]);
-  const [nowPlayingMovies, setNowPlayingMovies] = useState<Movie[]>([]);
-  const [upcomingMovies, setUpcomingMovies] = useState<Movie[]>([]);
-
+const MovieCoverflow: React.FC = () => {
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [query, setQuery] = useState('');
+  const [selectedTitle, setSelectedTitle] = useState('요즘 인기 🔥');
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get('category') || 'popular';
 
-  const handleClick = (id: number) => {
-    router.push(`/movie/${id}`);
+  const fetchMovies = (endpoint: string, titleLabel: string) => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      console.error('Access token not found');
+      return;
+    }
+
+    setSelectedTitle(titleLabel);
+
+    axios
+      .get(`http://localhost:8080/api/tmdb/${endpoint}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => setMovies(res.data.results))
+      .catch((err) => console.error(`${endpoint} 영화 호출 실패:`, err));
   };
 
   useEffect(() => {
-    // 인기 영화
-    axios.get('http://localhost:8080/api/tmdb/popular')
-      .then(response => {
-        setPopularMovies(response.data.results);
-      })
-      .catch(error => {
-        console.error('TMDB 인기 영화 호출 실패:', error);
-      });
+    fetchMovies(categoryParam, '요즘 인기 🔥');
+  }, [categoryParam]);
 
-    // 높은 평점 영화
-    axios.get('http://localhost:8080/api/tmdb/top-rated')
-      .then(response => {
-        setTopRatedMovies(response.data.results);
-      })
-      .catch(error => {
-        console.error('TMDB 높은 평점 영화 호출 실패:', error);
-      });
-
-    // 최신 개봉 영화
-    axios.get('http://localhost:8080/api/tmdb/now-playing')
-      .then(response => {
-        setNowPlayingMovies(response.data.results);
-      })
-      .catch(error => {
-        console.error('TMDB 최신 개봉 영화 호출 실패:', error);
-      });
-
-    // 개봉 예정 영화
-    axios.get('http://localhost:8080/api/tmdb/upcoming')
-      .then(response => {
-        setUpcomingMovies(response.data.results);
-      })
-      .catch(error => {
-        console.error('TMDB 개봉 예정 영화 호출 실패:', error);
-      });
-  }, []);
+  const filteredMovies = movies.filter((movie) =>
+    movie.title.toLowerCase().includes(query.toLowerCase())
+  );
 
   return (
-    
-    <div>
-        <section id="calendar" className='scroll-mt-20'>
-      <h2 className="text-2xl font-bold mb-4">요즘 인기</h2>
-      <div className="flex overflow-x-auto space-x-4 py-4">
-        {popularMovies.map((movie) => (
-          <div
-            key={movie.id}
-            onClick={() => handleClick(movie.id)}
-            className="w-60 h-[480px] flex-shrink-0 cursor-pointer overflow-hidden transition-shadow"
+    <section id="popular">
+      <div className="bg-black text-white flex flex-col items-center py-10 min-h-screen px-4">
+        
+
+        {/* 🔘 필터 버튼 */}
+        <div className="flex flex-wrap justify-center gap-4 mt-20">
+          <button
+            onClick={() => fetchMovies('popular', '요즘 인기 🔥')}
+            className="px-4 py-2 border border-gray-300 rounded transition-all duration-200 ease-in-out transform hover:bg-zinc-800 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 "
           >
-            <div className="w-full h-[360px]">
+            요즘 인기
+          </button>
+          <button
+            onClick={() => fetchMovies('top-rated', '높은 평점 🌟')}
+            className="px-4 py-2 border border-gray-300 rounded transition-all duration-200 ease-in-out transform hover:bg-zinc-800 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 "
+          >
+            높은 평점
+          </button>
+          <button
+            onClick={() => fetchMovies('now-playing', '최신 개봉 🎬')}
+            className="px-4 py-2 border border-gray-300 rounded transition-all duration-200 ease-in-out transform hover:bg-zinc-800 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 "
+          >
+            최신 개봉
+          </button>
+          <button
+            onClick={() => fetchMovies('upcoming', '개봉 예정 🎞️')}
+            className="px-4 py-2 border border-gray-300 rounded transition-all duration-200 ease-in-out transform hover:bg-zinc-800 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 "
+          >
+            개봉 예정
+          </button>
+        </div>
+
+        <h2 className="text-3xl font-bold mb-10 mt-20 mb-15">{selectedTitle}</h2>
+
+        {/* 🎞️ 영화 슬라이더 */}
+        <Swiper
+          effect="coverflow"
+          grabCursor
+          centeredSlides
+          slidesPerView="auto"
+          loop
+          modules={[EffectCoverflow]}
+          coverflowEffect={{
+            rotate: 30,
+            stretch: 0,
+            depth: 200,
+            modifier: 1.3,
+            slideShadows: false,
+          }}
+          className="custom-coverflow-swiper w-full max-w-5xl"
+        >
+          {filteredMovies.map((movie) => (
+            <SwiperSlide
+              key={movie.id}
+              className="custom-coverflow-slide cursor-pointer"
+              onClick={() => router.push(`/movie/${movie.id}`)}
+            >
               <img
                 src={
                   movie.poster_path
                     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                     : '/no-image.jpg'
                 }
-                alt={movie.title || '영화 포스터'}
-                className="w-full h-full object-cover hover:scale-105"
+                alt={movie.title}
               />
-            </div>
-
-  <div className="px-1 py-2 h-[80px] flex flex-col">
-    <h4 className="text-sm font-medium leading-tight line-clamp-2">{movie.title}</h4>
-    <p className="text-xs text-gray-500">{movie.release_date}</p>
-  </div>
-</div>
-
-        ))}
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
-      </section>
-      
-      <section id="diary" className='scroll-mt-20'>
-      <h2 className="text-2xl font-bold mb-4">높은 평점</h2>
-      <div className="flex overflow-x-auto space-x-4 py-4">
-        {topRatedMovies.map((movie) => (
-          <div
-          key={movie.id}
-          onClick={() => handleClick(movie.id)}
-          className="w-60 h-[480px] flex-shrink-0 cursor-pointer overflow-hidden transition-shadow"
-        >
-          <div className="w-full h-[360px]">
-            <img
-              src={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                  : '/no-image.jpg'
-              }
-              alt={movie.title || '영화 포스터'}
-              className="w-full h-full object-cover hover:scale-105"
-            />
-          </div>
-
-<div className="px-1 py-2 h-[80px] flex flex-col">
-  <h4 className="text-sm font-medium leading-tight line-clamp-2">{movie.title}</h4>
-  <p className="text-xs text-gray-500">{movie.release_date}</p>
-</div>
-</div>
-        ))}
-      </div>
-      </section>
-      <section id="recommend" className='scroll-mt-20'>
-      <h2 className="text-2xl font-bold mb-4">최신 개봉</h2>
-      <div className="flex overflow-x-auto space-x-4 py-4">
-        {nowPlayingMovies.map((movie) => (
-          <div
-          key={movie.id}
-          onClick={() => handleClick(movie.id)}
-          className="w-60 h-[480px] flex-shrink-0 cursor-pointer overflow-hidden transition-shadow"
-        >
-          <div className="w-full h-[360px]">
-            <img
-              src={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                  : '/no-image.jpg'
-              }
-              alt={movie.title || '영화 포스터'}
-              className="w-full h-full object-cover hover:scale-105"
-            />
-          </div>
-
-<div className="px-1 py-2 h-[80px] flex flex-col">
-  <h4 className="text-sm font-medium leading-tight line-clamp-2">{movie.title}</h4>
-  <p className="text-xs text-gray-500">{movie.release_date}</p>
-</div>
-</div>
-        ))}
-      </div>
-      </section>
-
-      <section id="analysis" className='scroll-mt-20'>
-      <h2 className="text-2xl font-bold mb-4">개봉 예정</h2>
-      <div className="flex overflow-x-auto space-x-4 py-4">
-        {upcomingMovies.map((movie) => (
-          <div
-          key={movie.id}
-          onClick={() => handleClick(movie.id)}
-          className="w-60 h-[480px] flex-shrink-0 cursor-pointer overflow-hidden transition-shadow"
-        >
-          <div className="w-full h-[360px]">
-            <img
-              src={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                  : '/no-image.jpg'
-              }
-              alt={movie.title || '영화 포스터'}
-              className="w-full h-full object-cover hover:scale-105"
-            />
-          </div>
-
-<div className="px-1 py-2 h-[80px] flex flex-col">
-  <h4 className="text-sm font-medium leading-tight line-clamp-2">{movie.title}</h4>
-  <p className="text-xs text-gray-500">{movie.release_date}</p>
-</div>
-</div>
-        ))}
-      </div>
-      </section>
-    </div>
+    </section>
   );
 };
 
-export default MovieList;
+export default MovieCoverflow;
