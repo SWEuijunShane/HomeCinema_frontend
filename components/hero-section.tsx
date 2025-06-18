@@ -56,9 +56,7 @@ export default function HeroSection() {
           <Features />
 
           {/* ✅ Movie 섹션들 추가 */}
-          <div className="px-4 md:px-12 space-y-12 pb-20 pt-20">
             <MovieList />
-          </div>
         </section>
       </main>
     </>

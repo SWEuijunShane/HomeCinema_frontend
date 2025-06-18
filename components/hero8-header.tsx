@@ -34,10 +34,10 @@ interface User {
 
 
 const menuItems = [
-  { name: '친구목록', href: '/friend/list' },
   { name: '친구소식', href: '/friend/activity' },
-  { name: '영화추천', href: '/recommend' },
-  { name: '취향분석', href: '/taste' },
+  { name: '내 영화', href: '/user/wantToWatch' },
+  { name: '내 별점', href: '/user/rating' },
+  { name: '내 리뷰', href: '/user/review' },
 ]
 
 export const HeroHeader = () => {
@@ -172,21 +172,8 @@ useEffect(() => {
                   ))}
                 </ul>
               </div>
-
-              {/* 검색창 + 버튼 + 결과 드롭다운 */}
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit relative">
-                <Input
-                  type="search"
-                  placeholder="영화, 배우, 인물 검색"
-                  className="sm:w-40 md:w-60"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && query.trim()) {
-                      router.push(`/search?query=${encodeURIComponent(query.trim())}`)
-                    }
-                  }}
-                />
+
                 <Button
                   asChild
                   variant="outline"
@@ -236,38 +223,6 @@ useEffect(() => {
 >
   로그아웃
 </button>
-                
-
-                  
-                {/* 검색 결과 드롭다운 */}
-                {(movies.length > 0 || people.length > 0) && (
-  <ul className="absolute top-full left-0 mt-1 max-h-80 w-full overflow-auto rounded-md border bg-white p-2 shadow-lg z-50 dark:bg-gray-800 dark:border-gray-700 space-y-2">
-    
-    {/* 영화 섹션 */}
-    {movies.map((movie) => (
-      <li
-        key={`movie-${movie.id}`}
-        className="cursor-pointer rounded p-2 hover:bg-gray-200 dark:hover:bg-gray-700"
-        onClick={() => router.push(`/movie/${movie.id}`)}
-      >
-        <div className="text-sm font-semibold">{movie.title}</div>
-        <div className="text-xs text-muted-foreground">{movie.release_date}</div>
-      </li>
-    ))}
-
-    {/* 인물 섹션 */}
-    {people.map((person) => (
-      <li
-        key={`person-${person.id}`}
-        className="cursor-pointer rounded p-2 hover:bg-gray-200 dark:hover:bg-gray-700"
-        onClick={() => router.push(`/person/${person.id}`)}
-      >
-        <div className="text-sm font-semibold">{person.name}</div>
-        <div className="text-xs text-muted-foreground">{person.known_for_department || '인물'}</div>
-      </li>
-    ))}
-  </ul>
-)}
 
               </div>
             </div>
