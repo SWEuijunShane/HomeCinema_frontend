@@ -25,6 +25,14 @@ interface Person {
   known_for_department?: string
 }
 
+interface User {
+  profileImage?: string
+  nickname: string
+  email: string
+  name: string
+}
+
+
 const menuItems = [
   { name: '친구목록', href: '/friend/list' },
   { name: '친구소식', href: '/friend/activity' },
@@ -40,6 +48,7 @@ export const HeroHeader = () => {
 
   const [movies, setMovies] = React.useState<Movie[]>([])
   const [people, setPeople] = React.useState<Person[]>([])
+  const [user, setUser] = React.useState<User | null>(null)
 
 
 const handleSearch = async () => {
@@ -72,6 +81,33 @@ const handleSearch = async () => {
     }
   }, [query])
 
+
+
+useEffect(() => {
+  const fetchUser = async () => {
+    const token = localStorage.getItem("accessToken")
+    if (!token) {
+      console.log("🔒 로그인되어 있지 않음 (토큰 없음)")
+      return // 요청 보내지 않음
+    }
+
+    try {
+      const res = await axios.get("http://localhost:8080/api/user/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      setUser(res.data)
+    } catch (err) {
+      console.error("❌ 사용자 정보 불러오기 실패", err)
+      setUser(null) // 혹은 로그인 페이지로 리디렉션
+    }
+  }
+
+  fetchUser()
+}, [])
+
+
   const [menuState, setMenuState] = React.useState(false)
 
   return (
@@ -83,15 +119,15 @@ const handleSearch = async () => {
         <div className="mx-auto max-w-6xl px-6 transition-all duration-300">
           <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
             <div className="flex w-full items-center justify-between gap-12 lg:w-auto">
-              <Link href="/" aria-label="home" className="flex items-center space-x-2">
+              <a href="/" onClick={() => (window.location.href = "/")}>
                 <Image
-                  src="/images/logo3.png" // public 디렉토리 기준
+                  src="/images/logo3.png"
                   alt="방구석시네마 로고"
-                  width={120}      // 원하는 크기로 조절
+                  width={120}
                   height={50}
                   className="h-auto w-auto"
                 />
-              </Link>
+              </a>
 
               <button
                 onClick={() => setMenuState(!menuState)}
@@ -155,12 +191,23 @@ const handleSearch = async () => {
                   asChild
                   variant="outline"
                   size="sm"
-                  className="w-10 h-10 rounded-full p-0 flex items-center justify-center"
+                  className="w-10 h-10 rounded-full p-0 flex items-center justify-center overflow-hidden"
                 >
                   <Link href="/user/profile">
-                    <SmilePlus className="w-5 h-5" />
+                    <span suppressHydrationWarning>
+                      {user?.profileImage ? (
+                        <img
+                          src={user.profileImage}
+                          alt="프로필 이미지"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <SmilePlus className="w-5 h-5" />
+                      )}
+                    </span>
                   </Link>
                 </Button>
+
 
 
 {/* 로그아웃 텍스트 링크 */}

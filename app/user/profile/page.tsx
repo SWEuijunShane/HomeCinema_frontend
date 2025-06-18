@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import customAxios from "@/lib/axios"
 import Profile from "@/components/profile"
-import EditProfileForm from "@/components/edit-profile-form"
+import EditProfileForm from "@/components/EditProfileForm"
 import { Button } from "@/components/ui/button"
 import axios from "axios"
 import { useRouter } from 'next/navigation';
@@ -13,6 +13,7 @@ type UserInfo = {
   email: string
   name: string
   nickname: string
+  profileImage?: string
 }
 
 export default function ProfilePage() {
@@ -37,6 +38,13 @@ export default function ProfilePage() {
   useEffect(() => {
     fetchUserInfo()
   }, [])
+
+  useEffect(() => {
+    if (user) {
+      console.log("✅ 프로필 이미지 URL:", user.profileImage)
+    }
+  }, [user])
+
 
   if (!user) return <p>Loading...</p>
 

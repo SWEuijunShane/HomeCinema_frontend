@@ -1,37 +1,37 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import Image from 'next/image'
-import { Button } from '@/components/ui/button'
+import { useState } from 'react';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
 export default function ProfileSettingPage() {
-  const [imageFile, setImageFile] = useState<File | null>(null)
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-  const [emojiUrl, setEmojiUrl] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [emojiUrl, setEmojiUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      setImageFile(file)
-      setPreviewUrl(URL.createObjectURL(file))
-      setEmojiUrl(null)
+      setImageFile(file);
+      setPreviewUrl(URL.createObjectURL(file));
+      setEmojiUrl(null);
     }
-  }
+  };
 
   const generateEmoji = async () => {
-    if (!imageFile) return
-    setLoading(true)
+    if (!imageFile) return;
+    setLoading(true);
 
     try {
-      const token = localStorage.getItem('accessToken')
+      const token = localStorage.getItem('accessToken');
       if (!token) {
-        alert('로그인이 필요합니다.')
-        return
+        alert('로그인이 필요합니다.');
+        return;
       }
 
-      const formData = new FormData()
-      formData.append('file', imageFile)
+      const formData = new FormData();
+      formData.append('file', imageFile);
 
       const res = await fetch('http://localhost:8080/api/emoji/generate', {
         method: 'POST',
@@ -39,21 +39,31 @@ export default function ProfileSettingPage() {
           Authorization: `Bearer ${token}`,
         },
         body: formData,
-      })
+      });
 
-      if (!res.ok) {
-        throw new Error('이모지 생성 실패')
+      if (!res.ok) throw new Error('이모지 생성 실패');
+
+      const data = await res.json();
+
+      // 🔍 이 위치에 삽입
+      console.log("data:", data);
+      console.log("data.images:", data.images);
+      console.log("data.images[0]:", data.images?.[0]);
+
+      const url = data.emojiUrl ?? data.images?.[0];
+
+      if (url) {
+        setEmojiUrl(url);
+      } else {
+        throw new Error('응답 형식 오류 또는 이미지 없음');
       }
-
-      const data = await res.json()
-      setEmojiUrl(data.emojiUrl)
     } catch (err) {
-      alert('이모지 생성 중 오류가 발생했습니다.')
-      console.error(err)
+      alert('이모지 생성 중 오류가 발생했습니다.');
+      console.error(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="max-w-md mx-auto py-10 px-4">
@@ -71,6 +81,7 @@ export default function ProfileSettingPage() {
             width={200}
             height={200}
             className="rounded border shadow-sm"
+            unoptimized
           />
         </div>
       )}
@@ -86,15 +97,29 @@ export default function ProfileSettingPage() {
       {emojiUrl && (
         <div className="mt-6 text-center">
           <p className="mb-2 text-sm text-gray-500">이모지 결과</p>
+          {/* 외부 URL을 안전하게 표시하기 위해 unoptimized 추가 */}
+          <div className="w-24 h-24 mx-auto rounded-full overflow-hidden border shadow">
+
           <Image
             src={emojiUrl}
             alt="emoji"
             width={100}
             height={100}
-            className="rounded-full mx-auto border shadow"
+            className="w-full h-full object-cover"
+            unoptimized
           />
+          </div>
+          <div className="mt-4 space-x-4">
+            <a
+              href={emojiUrl}
+              download="emoji.webp"
+              className="text-blue-600 hover:underline text-sm"
+            >
+              이미지 다운로드
+            </a>
+          </div>
         </div>
       )}
     </div>
-  )
+  );
 }
