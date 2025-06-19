@@ -34,7 +34,7 @@ interface User {
 
 
 const menuItems = [
-  { name: '친구소식', href: '/friend/activity' },
+  { name: '친구목록', href: '/friend/list' },
   { name: '내 영화', href: '/user/wantToWatch' },
   { name: '내 별점', href: '/user/rating' },
   { name: '내 리뷰', href: '/user/review' },

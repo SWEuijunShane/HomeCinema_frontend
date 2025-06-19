@@ -147,8 +147,8 @@ export default function Features() {
             variant="ghost"
             className="py-7 px-8 text-base border dark:border-zinc-800 rounded-md shadow-sm hover:bg-zinc-100 dark:hover:bg-zinc-800"
           >
-            <Link href="/friend/list" className="flex items-center gap-8">
-              <span className="text-nowrap">친구 목록</span>
+            <Link href="/friend/activity" className="flex items-center gap-8">
+              <span className="text-nowrap">친구 소식</span>
               <img src="/images/star.png" alt="Start" className="w-8" />
             </Link>
           </Button>
