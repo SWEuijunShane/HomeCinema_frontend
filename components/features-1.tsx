@@ -79,14 +79,14 @@ export default function Features() {
           </div>
 
           {(movies.length > 0 || people.length > 0) && (
-            <ul className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 max-h-80 w-full max-w-2xl overflow-auto rounded-md border bg-white p-2 shadow-lg z-50 dark:bg-gray-800 dark:border-gray-700 space-y-2">
+            <ul className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 max-h-80 w-full max-w-lg overflow-auto rounded-md border bg-white p-2 shadow-lg z-50 dark:bg-gray-800 dark:border-gray-700 space-y-2">
               {movies.map((movie) => (
                 <li
                   key={`movie-${movie.id}`}
                   className="cursor-pointer rounded p-2 hover:bg-gray-200 dark:hover:bg-gray-700"
                   onClick={() => router.push(`/movie/${movie.id}`)}
                 >
-                  <div className="text-sm font-semibold">🎬 {movie.title}</div>
+                  <div className="text-sm font-semibold">{movie.title}</div>
                   <div className="text-xs text-muted-foreground">{movie.release_date}</div>
                 </li>
               ))}
@@ -96,7 +96,7 @@ export default function Features() {
                   className="cursor-pointer rounded p-2 hover:bg-gray-200 dark:hover:bg-gray-700"
                   onClick={() => router.push(`/person/${person.id}`)}
                 >
-                  <div className="text-sm font-semibold">🧑 {person.name}</div>
+                  <div className="text-sm font-semibold">{person.name}</div>
                   <div className="text-xs text-muted-foreground">{person.known_for_department || '인물'}</div>
                 </li>
               ))}

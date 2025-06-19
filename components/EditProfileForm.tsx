@@ -1,10 +1,13 @@
 import { useState } from "react"
 import axios from "axios"
 import UploadProfileImage from "./UploadProfileImage"
+import { Button } from "@/components/ui/button"  // Button 컴포넌트 불러오기
 
 export default function EditProfileForm({ onSuccess }: { onSuccess: () => void }) {
   const [nickname, setNickname] = useState("")
   const [profileImage, setProfileImage] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -27,23 +30,29 @@ export default function EditProfileForm({ onSuccess }: { onSuccess: () => void }
     }
   }
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);  // 파일이 선택되면 imageFile 상태를 업데이트
+      setProfileImage(URL.createObjectURL(file)); // 파일 미리보기 URL 생성
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <label>
-        닉네임
-        <input
-          type="text"
-          value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
-          className="w-full border px-2 py-1 rounded"
-        />
-      </label>
+      {/* 사진 업로드 컴포넌트 */}
+      <UploadProfileImage onUploadSuccess={(url) => {
+        setProfileImage(url);
+        setImageFile(null);  // 업로드 성공시 파일 상태 초기화 (필요시)
+      }} />
 
-      <UploadProfileImage onUploadSuccess={(url) => setProfileImage(url)} />
-
-      <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded">
+      {/* "저장 버튼" */}
+      <Button
+        className="w-full"
+        disabled={loading || !profileImage}  // profileImage가 없으면 버튼 비활성화
+      >
         저장
-      </button>
+      </Button>
     </form>
   )
 }
