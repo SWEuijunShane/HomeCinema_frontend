@@ -12,9 +12,13 @@ const nextConfig: NextConfig = {
         hostname: "oaidalleapiprodscus.blob.core.windows.net",
       },
       {
-      protocol: 'https',
-      hostname: 'replicate.delivery', 
+        protocol: 'https',
+        hostname: 'replicate.delivery', 
       },
+      {
+        protocol: "http",
+        hostname: "localhost", 
+      }
     ],
   },
 };

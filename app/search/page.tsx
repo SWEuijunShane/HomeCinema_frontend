@@ -78,6 +78,7 @@ export default function SearchPage() {
         }>('http://localhost:8080/api/tmdb/search', {
           params: { query },
         })
+        console.log('🔍 users:', res.data.users);
         setMovies(res.data.movies || [])
         setPeople(res.data.people || [])
         setUsers(res.data.users || [])
@@ -93,6 +94,7 @@ export default function SearchPage() {
 
   if (loading) return <p className="p-4">🔍 검색 중입니다...</p>
 
+  
   return (
     <div className="max-w-5xl mx-auto px-4 py-6">
       <h1 className="text-2xl font-bold mb-4">🔎 &quot;{query}&quot; 검색 결과</h1>
@@ -164,6 +166,7 @@ export default function SearchPage() {
       ) : (
         <ul className="space-y-4">
           {users.map((user) => (
+            console.log('👤 유저 프로필 URL:', user.profileImageUrl),
             <li key={user.id} className="flex items-center justify-between p-3 border rounded">
               <div className="flex items-center gap-3 cursor-pointer" onClick={() => router.push(`/otherUser/${user.id}/profile`)}>
                 <img

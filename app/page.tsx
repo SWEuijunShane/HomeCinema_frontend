@@ -15,31 +15,47 @@
 // }
 
 
-"use client"  // Next.js app router에서 클라이언트 컴포넌트로 명시
+"use client"
 
 import { useEffect, useState } from "react"
 import { LoginForm } from "@/components/login-form"
-//import MainPage from "./MainPage" // 메인 화면 컴포넌트 임포트 (경로는 상황에 맞게 조정)
-import HeroSection from "@/components/hero-section";
-
+import HeroSection from "@/components/hero-section"
+import axios from "axios"
 
 export default function Page() {
-  const [loading, setLoading] = useState(true) // 로그인 상태 확인 중
+  const [loading, setLoading] = useState(true)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
-    // 예: 로컬스토리지에 token이 있으면 로그인된 상태로 판단
     const token = localStorage.getItem("accessToken")
-    if (token) {
-      setIsLoggedIn(true)
-    } else {
+
+    if (!token) {
       setIsLoggedIn(false)
+      setLoading(false)
+      return
     }
-    setLoading(false)
+
+    // ✅ 백엔드에 유효성 확인
+    axios
+      .get("http://localhost:8080/api/user/validate", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        setIsLoggedIn(true)
+        setLoading(false)
+      })
+      .catch(() => {
+        // ❌ 토큰 유효하지 않음 → 로그인 해제
+        localStorage.removeItem("accessToken")
+        setIsLoggedIn(false)
+        setLoading(false)
+      })
   }, [])
 
   if (loading) {
-    return <div>로딩 중...</div> // 혹은 스켈레톤 UI, 스피너 등
+    return <div>로딩 중...</div>
   }
 
   return (
@@ -49,7 +65,7 @@ export default function Page() {
       ) : (
         <div className="flex min-h-screen w-full items-center justify-center p-6 md:p-10">
           <div className="w-full max-w-sm">
-            <LoginForm setIsLoggedIn={setIsLoggedIn}/>
+            <LoginForm setIsLoggedIn={setIsLoggedIn} />
           </div>
         </div>
       )}
