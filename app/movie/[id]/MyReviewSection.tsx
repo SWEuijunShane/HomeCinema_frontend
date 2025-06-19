@@ -58,7 +58,7 @@ export default function MyReviewSection({ movieId }: { movieId: number }) {
   return (
     <div className="mt-6 border-t pt-4">
       <h2 className="text-lg font-semibold text-gray-800 mb-2">내 한줄평</h2>
-      <div className="bg-gray-100 p-4 rounded-md shadow-sm">
+      <div className="bg-gray-100 p-4 rounded-md">
         <p className="text-gray-700 mb-2">{myReview.content}</p>
         {/* {myReview.gifPath && (
           <img

@@ -80,9 +80,21 @@ export default function UserReviewPage() {
       <h2 className="text-md font-bold mb-4">{review.movieTitle}</h2>
       {/* 한줄평 */}
       <p className="text-gray-800 text-sm mb-2">{review.content}</p>
+      
     </div>
   </Link>
-              </div>
+  </div>
+  <Link
+  href={{
+    pathname: '/sticker',
+    query: { text: review.content },
+  }}
+>
+  <button className="mt-2 px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded text-sm">
+    스티커 만들기
+  </button>
+</Link>
+
 
               <hr className="my-2" />
 
