@@ -57,33 +57,34 @@ const MovieCoverflow: React.FC = () => {
       <div className="bg-black text-white flex flex-col items-center py-10 min-h-screen px-4">
         
 
-        {/* 🔘 필터 버튼 */}
-        <div className="flex flex-wrap justify-center gap-4 mt-20">
-          <button
-            onClick={() => fetchMovies('popular', '요즘 인기 🔥')}
-            className="px-4 py-2 border border-gray-300 rounded transition-all duration-200 ease-in-out transform hover:bg-zinc-800 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 "
-          >
-            요즘 인기
-          </button>
-          <button
-            onClick={() => fetchMovies('top-rated', '높은 평점 🌟')}
-            className="px-4 py-2 border border-gray-300 rounded transition-all duration-200 ease-in-out transform hover:bg-zinc-800 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 "
-          >
-            높은 평점
-          </button>
-          <button
-            onClick={() => fetchMovies('now-playing', '최신 개봉 🎬')}
-            className="px-4 py-2 border border-gray-300 rounded transition-all duration-200 ease-in-out transform hover:bg-zinc-800 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 "
-          >
-            최신 개봉
-          </button>
-          <button
-            onClick={() => fetchMovies('upcoming', '개봉 예정 🎞️')}
-            className="px-4 py-2 border border-gray-300 rounded transition-all duration-200 ease-in-out transform hover:bg-zinc-800 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 "
-          >
-            개봉 예정
-          </button>
-        </div>
+{/* 🔘 필터 버튼 */}
+<div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-20 w-full max-w-2xl ">
+  <button
+    onClick={() => fetchMovies('popular', '요즘 인기 🔥')}
+    className="px-4 py-2 border border-gray-300 rounded transition-all duration-200 ease-in-out transform hover:bg-zinc-800 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2"
+  >
+    요즘 인기
+  </button>
+  <button
+    onClick={() => fetchMovies('top-rated', '높은 평점 🌟')}
+    className="px-4 py-2 border border-gray-300 rounded transition-all duration-200 ease-in-out transform hover:bg-zinc-800 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2"
+  >
+    높은 평점
+  </button>
+  <button
+    onClick={() => fetchMovies('now-playing', '최신 개봉 🎬')}
+    className="px-4 py-2 border border-gray-300 rounded transition-all duration-200 ease-in-out transform hover:bg-zinc-800 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2"
+  >
+    최신 개봉
+  </button>
+  <button
+    onClick={() => fetchMovies('upcoming', '개봉 예정 🎞️')}
+    className="px-4 py-2 border border-gray-300 rounded transition-all duration-200 ease-in-out transform hover:bg-zinc-800 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2"
+  >
+    개봉 예정
+  </button>
+</div>
+
 
         <h2 className="text-3xl font-bold mb-10 mt-20 mb-15">{selectedTitle}</h2>
 
@@ -117,6 +118,7 @@ const MovieCoverflow: React.FC = () => {
                     : '/no-image.jpg'
                 }
                 alt={movie.title}
+                className="transition-transform duration-300 ease-in-out hover:scale-105"
               />
             </SwiperSlide>
           ))}
