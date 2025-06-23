@@ -144,7 +144,7 @@ export const HeroHeader = () => {
                 <Input
                   type="search"
                   placeholder="영화, 인물, 유저 검색"
-                  className="pl-4 pr-10 py-2 text-sm w-64 rounded-full border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-pink-400"
+                  className="pl-4 pr-10 py-2 text-sm w-64 rounded-full border border-gray-300 shadow-xs focus:outline-none focus:ring-2 focus:ring-pink-400"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={(e) => {
@@ -163,7 +163,7 @@ export const HeroHeader = () => {
                     <Input
                       type="search"
                       placeholder="영화, 인물, 유저 검색"
-                      className="pl-4 pr-10 py-3 text-base w-full rounded-full border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-pink-400"
+                      className="pl-4 pr-10 py-3 text-base w-full rounded-full border border-gray-300 shadow-xs focus:outline-none focus:ring-2 focus:ring-pink-400"
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                       onKeyDown={(e) => {
