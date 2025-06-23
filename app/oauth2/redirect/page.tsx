@@ -10,10 +10,12 @@ export default function OAuth2Redirect() {
     const urlParams = new URLSearchParams(window.location.search)
     const accessToken = urlParams.get("accessToken")
     const refreshToken = urlParams.get("refreshToken")
+    const userId = urlParams.get("userId")
 
-    if (accessToken && refreshToken) {
+    if (accessToken && refreshToken && userId) {
       localStorage.setItem("accessToken", accessToken)
       localStorage.setItem("refreshToken", refreshToken)
+      localStorage.setItem("userId", userId)
 
       router.replace("/")  // 로그인 성공하면 메인 페이지로 이동
     } else {

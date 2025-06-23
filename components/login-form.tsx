@@ -32,11 +32,12 @@ export function LoginForm({ className, setIsLoggedIn, ...props }: LoginFormProps
         password,
       })
 
-      const { accessToken, refreshToken } = response.data
+      const { accessToken, refreshToken, userId } = response.data
       alert("로그인 성공!")
 
       localStorage.setItem("accessToken", accessToken)
       localStorage.setItem("refreshToken", refreshToken)
+      localStorage.setItem("userId", userId.toString())
 
       setIsLoggedIn(true)   // 로그인 성공 상태 업데이트
       router.replace("/")   // 메인 페이지로 이동
