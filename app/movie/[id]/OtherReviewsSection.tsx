@@ -8,7 +8,7 @@ import Link from 'next/link';
 interface Review {
     reviewId: number;
     userId: number;
-    profileImageUrl: string;
+    profileImageUrl: string | null;
     userNickname: string;
     content: string;
     emotions: string[];
@@ -141,7 +141,7 @@ export default function OtherReviewsSection({ movieId }: { movieId: number }) {
                         <div className="flex justify-between items-center mb-3 cursor-default" onClick={(e) => e.stopPropagation()}>
                             <div className="flex items-center space-x-2">
                                 <Link href={`/otherUser/${review.userId}/profile`} onClick={(e) => e.stopPropagation()}>
-                                    <img src={review.profileImageUrl} alt="프로필" className="w-8 h-8 rounded-full object-cover" />
+                                    <img src={review.profileImageUrl || '/images/default-profile.png'} alt="프로필" className="w-8 h-8 rounded-full object-cover" />
                                 </Link>
                                 <div className="text-sm font-semibold text-gray-800 max-w-[100px] truncate">
                                     {review.userNickname}

@@ -8,7 +8,7 @@ interface FriendActivity {
   activityType: 'REVIEW' | 'RATING' | 'WISHLIST' | 'BADGE';
   userId: number;
   nickname: string;
-  profileImage: string;
+  profileImage: string | null;
   movieId?: number;
   movieTitle?: string;
   moviePosterPath?: string;
@@ -68,7 +68,7 @@ export default function FriendActivityPage() {
               <div className="flex justify-between items-center mb-4 pb-3 border-b border-gray-200">
                 <div className="flex items-center gap-2 text-sm text-gray-700">
                   <Link href={`/otherUser/${activity.userId}/profile`}>
-                    <img src={activity.profileImage} alt="프로필" className="w-6 h-6 rounded-full object-cover" />
+                    <img src={activity.profileImage || '/images/default-profile.png'} alt="프로필" className="w-6 h-6 rounded-full object-cover" />
                   </Link>
                   <span className="text-gray-500 mb-1">
                     <strong className="text-gray-900">{activity.nickname}</strong>님이 <strong className="text-gray-900">{activity.movieTitle}</strong>

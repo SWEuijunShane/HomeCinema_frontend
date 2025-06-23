@@ -22,7 +22,7 @@ interface ReviewDetail {
   content: string;
   gifPath: string;
   nickname: string;
-  profileImageUrl: string;
+  profileImageUrl: string | null;
   userId: number;
   createdAt: string;
   movieId: number;
@@ -167,7 +167,7 @@ export default function ReviewDetailPage() {
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <Link href={`/otherUser/${review.userId}/profile`}>
-              <img src={review.profileImageUrl || '/default-profile.png'} className="w-8 h-8 rounded-full object-cover" />
+              <img src={review.profileImageUrl || '/images/default-profile.png'} className="w-8 h-8 rounded-full object-cover" />
             </Link>
             <span className="text-sm font-semibold">{review.nickname}</span>
           </div>
