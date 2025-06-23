@@ -68,7 +68,7 @@ export default function FriendActivityPage() {
               <div className="flex justify-between items-center mb-4 pb-3 border-b border-gray-200">
                 <div className="flex items-center gap-2 text-sm text-gray-700">
                   <Link href={`/otherUser/${activity.userId}/profile`}>
-                  <img src={activity.profileImage} alt="프로필" className="w-6 h-6 rounded-full object-cover" />
+                    <img src={activity.profileImage} alt="프로필" className="w-6 h-6 rounded-full object-cover" />
                   </Link>
                   <span className="text-gray-500 mb-1">
                     <strong className="text-gray-900">{activity.nickname}</strong>님이 <strong className="text-gray-900">{activity.movieTitle}</strong>
@@ -88,7 +88,6 @@ export default function FriendActivityPage() {
                 <span className="text-xs text-gray-400">{formatTime(activity.createdAt)}</span>
               </div>
 
-
               {/* BADGE 타입 */}
               {activity.activityType === 'BADGE' ? (
                 <div className="text-center py-6">
@@ -105,21 +104,27 @@ export default function FriendActivityPage() {
                         alt={activity.movieTitle}
                         className="w-20 h-28 object-cover rounded"
                       />
-                      <div>
+                      <div className="flex-1">
                         <p className="text-sm text-gray-800 font-medium">{activity.movieTitle}</p>
                         <p className="text-xs text-gray-500 mb-1">{activity.movieYear}</p>
+
                         {activity.rating && (
                           <p className="text-sm text-yellow-600 mt-2">⭐ 평점 {activity.rating}점</p>
                         )}
+
                         {activity.reviewContent && (
-                          <p className="text-sm text-gray-700 mt-2">{activity.reviewContent}</p>
+                          <p className="text-sm text-gray-700 mt-2 whitespace-pre-line break-words break-all line-clamp-3 min-h-[63px]">
+                            {activity.reviewContent}
+                          </p>
                         )}
+
+                        {/* ✅ 감정 키워드 감싸는 부분에 border-t, pt-2 추가 */}
                         {(activity.emotions?.length ?? 0) > 0 && (
-                          <div className="flex flex-wrap gap-2 mt-7">
+                          <div className="flex flex-wrap gap-2 border-t border-gray-200 pt-2 mt-2">
                             {activity.emotions!.map((emotion, i) => (
                               <span
                                 key={i}
-                                className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full"
+                                className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full border"
                               >
                                 #{emotion}
                               </span>
@@ -129,12 +134,9 @@ export default function FriendActivityPage() {
                       </div>
                     </Link>
                   </div>
-
                 )
               )}
             </li>
-
-
           ))}
         </ul>
       )}

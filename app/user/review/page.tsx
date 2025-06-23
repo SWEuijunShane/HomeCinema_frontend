@@ -11,8 +11,10 @@ interface ReviewListResponseDto {
   userNickname: string;
   emotions: string[];
   movieId: number;
+  releaseYear: string;
   movieTitle: string;
   posterPath: string;
+  createdAt: string;
 }
 
 export default function UserReviewPage() {
@@ -48,6 +50,17 @@ export default function UserReviewPage() {
     fetchReviews();
   }, []);
 
+  const formatTime = (iso: string) => {
+    const date = new Date(iso);
+    return date.toLocaleString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
   if (loading) return <p>불러오는 중...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
 
@@ -60,9 +73,21 @@ export default function UserReviewPage() {
         <ul className="space-y-6">
           {reviews.map((review, index) => (
             <li key={index} className="p-4 bg-gray-50 rounded">
-              {/* 닉네임 표시 */}
-              <div className="flex justify-between items-center mb-2">
-                <p className="text-sm text-gray-600 font-semibold">@{review.userNickname}</p>
+              {/* 작성일자 표시 */}
+              <div className="flex justify-between items-center">
+                <span className="text-xs text-gray-500">{formatTime(review.createdAt)}</span>
+                <div className="flex justify-end">
+                  <Link
+                    href={{
+                      pathname: '/sticker',
+                      query: { text: review.content },
+                    }}
+                  >
+                    <button className="px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded text-sm">
+                      스티커 만들기
+                    </button>
+                  </Link>
+                </div>
               </div>
 
               {/* 구분선 */}
@@ -70,34 +95,21 @@ export default function UserReviewPage() {
 
               {/* 영화 포스터 + 제목 */}
               <div className="flex gap-4 items-start mb-4">
-<Link href={`/movie/${review.movieId}`} className="flex gap-4 items-start hover:opacity-90">
-    <img
-      src={`https://image.tmdb.org/t/p/w154${review.posterPath}`}
-      alt={review.movieTitle}
-      className="w-20 h-28 object-cover rounded"
-    />
-    <div>
-      <h2 className="text-md font-bold mb-4">{review.movieTitle}</h2>
-      {/* 한줄평 */}
-      <p className="text-gray-800 text-sm mb-2">{review.content}</p>
-      
-    </div>
-  </Link>
-  </div>
-  <Link
-  href={{
-    pathname: '/sticker',
-    query: { text: review.content },
-  }}
->
-  <button className="mt-2 px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded text-sm">
-    스티커 만들기
-  </button>
-</Link>
+                <Link href={`/movie/${review.movieId}`} className="flex gap-4 items-start hover:opacity-90">
+                  <img
+                    src={`https://image.tmdb.org/t/p/w154${review.posterPath}`}
+                    alt={review.movieTitle}
+                    className="w-20 h-28 object-cover rounded"
+                  />
+                  <div>
+                    <h2 className="text-sm font-bold">{review.movieTitle}</h2>
+                    <div className="text-xs text-gray-500 mb-4">{review.releaseYear}</div>
+                    {/* 한줄평 */}
+                    <p className="text-gray-800 text-sm whitespace-pre-line break-words break-all line-clamp-3 min-h-[63px]">{review.content}</p>
 
-
-              <hr className="my-2" />
-
+                  </div>
+                </Link>
+              </div>
               {/* 감정 해시태그 */}
               <div className="flex flex-wrap gap-2">
                 {review.emotions.map((emotion, i) => (
@@ -109,6 +121,9 @@ export default function UserReviewPage() {
                   </span>
                 ))}
               </div>
+
+              
+
             </li>
           ))}
         </ul>
