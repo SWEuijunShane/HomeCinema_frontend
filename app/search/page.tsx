@@ -99,6 +99,7 @@ export default function SearchPage() {
     <div className="max-w-5xl mx-auto px-4 py-6">
       <h1 className="text-2xl font-bold mb-4">🔎 &quot;{query}&quot; 검색 결과</h1>
 
+      
       {/* 🎬 영화 결과 */}
       <h2 className="text-xl font-semibold mt-6 mb-2">🎬 영화</h2>
       {movies.length === 0 ? (

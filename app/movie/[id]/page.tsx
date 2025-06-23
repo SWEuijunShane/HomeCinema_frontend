@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import MyReviewSection from '@/app/movie/[id]/MyReviewSection';
 import ReviewModalTrigger from '@/app/movie/[id]/ReviewModalTrigger';
-
+import OtherReviewsSection from './OtherReviewsSection';
 
 
 interface PersonSummary {
@@ -148,6 +148,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             </div>
           </div>
         )}
+        <OtherReviewsSection movieId={movieId} />
       </div>
     </main>
   );
