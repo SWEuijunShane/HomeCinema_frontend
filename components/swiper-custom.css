@@ -1,6 +1,6 @@
 .custom-coverflow-swiper .swiper-slide {
-  width: 240px;     /* ⬅️ 더 넓게 */
-  height: 320px;    /* ⬅️ 더 높게 */
+  width: 280px;     /* ⬅️ 더 넓게 */
+  height: 360px;    /* ⬅️ 더 높게 */
   opacity: 0.3;
   transform: scale(0.7);
   transition: all 0.4s ease;
