@@ -96,12 +96,12 @@ export default function SearchPage() {
 
   
   return (
-    <div className="max-w-5xl mx-auto px-4 py-6">
-      <h1 className="text-2xl font-bold mb-4">🔎 &quot;{query}&quot; 검색 결과</h1>
+    <div className="max-w-5xl mx-auto px-4 py-6 pt-20">
+      {/* <h1 className="text-2xl font-bold mb-4">🔎 &quot;{query}&quot; 검색 결과</h1> */}
 
       
       {/* 영화 결과 */}
-<h1 className="text-xl font-semibold mt-6 mb-2">영화</h1>
+<h1 className="text-2xl font-semibold mt-6 mb-2">영화</h1>
 {movies.length === 0 ? (
   <p className="text-sm text-gray-500">영화 결과가 없습니다.</p>
 ) : (
@@ -133,7 +133,7 @@ export default function SearchPage() {
 )}
 
 {/* 인물 결과 */}
-<h1 className="text-xl font-semibold mt-6 mb-2">인물</h1>
+<h1 className="text-2xl font-semibold mt-6 mb-2">인물</h1>
 {people.length === 0 ? (
   <p className="text-sm text-gray-500">인물 결과가 없습니다.</p>
 ) : (
@@ -165,7 +165,7 @@ export default function SearchPage() {
 )}
 
 {/* 유저 결과 */}
-<h1 className="text-xl font-semibold mt-6 mb-2">유저</h1>
+<h1 className="text-2xl font-semibold mt-6 mb-2">유저</h1>
 {users.length === 0 || myId === null ? (
   <p className="text-sm text-gray-500">유저 결과가 없습니다.</p>
 ) : (
@@ -174,7 +174,7 @@ export default function SearchPage() {
       {users.map((user) => (
         <li
           key={user.id}
-          className="min-w-[220px] max-w-[220px] flex-shrink-0 border rounded p-3 flex flex-col justify-between"
+          className="min-w-[220px] max-w-[300px] flex-shrink-0 border rounded p-3 flex flex-row justify-between gap-5"
         >
           <div
             className="flex items-center gap-3 cursor-pointer"

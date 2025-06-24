@@ -13,6 +13,7 @@ export default function StickerPage() {
   const [verticalPosition, setVerticalPosition] = useState(50);
   const [imgSize, setImgSize] = useState({ width: 600, height: 300 });
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState('/images/bubble/1.png'); // 기본 이미지
 
   useEffect(() => {
     const initialText = searchParams.get('text');
@@ -21,11 +22,11 @@ export default function StickerPage() {
 
   useEffect(() => {
     const img = new Image();
-    img.src = '/images/bubble.png';
+    img.src = selectedImage;
     img.onload = () => {
       setImgSize({ width: img.width, height: img.height });
     };
-  }, []);
+  }, [selectedImage]);
 
   const wrapText = (
     ctx: CanvasRenderingContext2D,
@@ -70,7 +71,7 @@ export default function StickerPage() {
     canvas.height = height;
 
     const img = new Image();
-    img.src = '/images/bubble.png';
+    img.src = selectedImage;
 
     img.onload = () => {
       ctx.clearRect(0, 0, width, height);
@@ -110,8 +111,28 @@ export default function StickerPage() {
   };
 
   return (
-    <div className="p-4 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6 text-center">자유롭게 수정하는 스티커</h1>
+    <div className="p-4 max-w-4xl mx-auto pt-20">
+      {/* <h1 className="text-2xl font-bold mb-6 text-center">자유롭게 수정하는 스티커</h1> */}
+      
+            <div className="my-6">
+      <h2 className="text-lg font-semibold mb-2">말풍선을 선택하세요:</h2>
+      <div className="grid grid-cols-5 gap-3">
+        {Array.from({ length: 10 }, (_, i) => {
+          const imagePath = `/images/bubble/${i + 1}.png`;
+          return (
+            <img
+              key={i}
+              src={imagePath}
+              alt={`bubble${i + 1}`}
+              className={`w-24 h-16 object-contain border rounded cursor-pointer transition ${
+                selectedImage === imagePath ? 'ring-2 ring-[#F3344E]/70' : 'hover:opacity-80'
+              }`}
+              onClick={() => setSelectedImage(imagePath)}
+            />
+          );
+        })}
+      </div>
+    </div>
 
       <div className="mb-4">
         <label className="block mb-2 text-lg font-semibold">스티커 텍스트:</label>
@@ -177,6 +198,11 @@ export default function StickerPage() {
           )}
         </div>
       </div>
+
+
+
+
+      
 
         <p className="text-sm text-gray-500 text-center mt-5">
           저장 후 인스타그램에서 자유롭게 공유해보세요!

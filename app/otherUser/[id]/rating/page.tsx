@@ -48,8 +48,7 @@ export default function OtherUserRatingPage() {
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div className="p-4 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6 text-center">별점별 평가한 영화</h1>
+    <div className="p-4 max-w-4xl mx-auto pt-20">
       {ratings.length === 0 ? (
         <p>해당 사용자가 남긴 평점이 없습니다.</p>
       ) : (

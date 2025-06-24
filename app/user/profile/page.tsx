@@ -74,8 +74,8 @@ export default function ProfilePage() {
 
   if (isEditing) {
   return (
-    <div className="max-w-md w-full mx-auto bg-white rounded p-6 mt-10">
-      <h1 className="text-xl font-bold mb-4 text-center">내 프로필 설정</h1>
+    <div className="max-w-md w-full mx-auto bg-white rounded p-6 mt-15">
+      <label className="block mb-2 text-sm font-medium text-gray-700">프로필 사진 업로드</label>
       <EditProfileForm
         onSuccess={() => {
           setIsEditing(false);
@@ -88,7 +88,7 @@ export default function ProfilePage() {
 
 if (isProfileEditing) {
   return (
-    <div className="max-w-md w-full mx-auto bg-white rounded p-6 mt-10">
+    <div className="max-w-md w-full mx-auto bg-white rounded p-6 mt-15">
       <h1 className="text-xl font-bold mb-4 text-center">회원 정보 수정</h1>
       <EditForm
         onSuccess={() => {
@@ -101,14 +101,14 @@ if (isProfileEditing) {
 }
 
   return (
-    <div className=" w-full max-w-5xl mx-auto mt-10 p-6 bg-white rounded shadow pt-20 pb-20">
+    <div className=" w-full max-w-5xl mx-auto mt-10 p-6 bg-white rounded pt-20 pb-20">
       {isEditing ? (
         // "내 프로필 설정" 버튼 클릭 시 EditProfileForm을 렌더링
         
         <>
           <div className="max-w-md w-full mx-auto bg-white rounded shadow p-6">
 
-          <h1 className="text-xl font-bold mb-4 text-center">내 프로필 설정</h1>
+          {/* <h1 className="text-xl font-bold mb-4 text-center">내 프로필 설정</h1> */}
           <EditProfileForm
             onSuccess={() => {
               setIsEditing(false); // EditProfileForm 완료 후 숨기기
@@ -160,7 +160,7 @@ if (isProfileEditing) {
         
         {/* 뱃지 이미지 */}
         <img
-          src={`/badge/${badge.id}.png`}
+          src={`/images/badge/${badge.id}.png`}
           alt={badge.name}
           className="w-15 h-12"
         />

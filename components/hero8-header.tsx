@@ -144,7 +144,7 @@ export const HeroHeader = () => {
                 <Input
                   type="search"
                   placeholder="영화, 인물, 유저 검색"
-                  className="pl-4 pr-10 py-2 text-sm w-64 rounded-full border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-pink-400"
+                  className="pl-4 pr-10 py-2 text-sm w-64 rounded-full border border-gray-300 shadow-xs focus:outline-none focus:ring-2 focus:ring-pink-400"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={(e) => {
@@ -163,7 +163,7 @@ export const HeroHeader = () => {
                     <Input
                       type="search"
                       placeholder="영화, 인물, 유저 검색"
-                      className="pl-4 pr-10 py-3 text-base w-full rounded-full border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-pink-400"
+                      className="pl-4 pr-10 py-3 text-base w-full rounded-full border border-gray-300 shadow-xs focus:outline-none focus:ring-2 focus:ring-pink-400"
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                       onKeyDown={(e) => {
@@ -181,6 +181,7 @@ export const HeroHeader = () => {
                       <li key={index}>
                         <Link
                           href={item.href}
+                          onClick={() => setMenuState(false)} 
                           className="text-muted-foreground hover:text-accent-foreground block duration-150"
                         >
                           <span>{item.name}</span>
@@ -199,7 +200,10 @@ export const HeroHeader = () => {
                   size="sm"
                   className="w-10 h-10 rounded-full p-0 flex items-center justify-center overflow-hidden"
                 >
-                  <Link href="/user/profile">
+                  <Link 
+                    href="/user/profile"
+                    onClick={() => setMenuState(false)} 
+                  >
                     <span suppressHydrationWarning>
                       {user?.profileImage ? (
                         <img src={user.profileImage} alt="프로필 이미지" className="w-full h-full object-cover" />

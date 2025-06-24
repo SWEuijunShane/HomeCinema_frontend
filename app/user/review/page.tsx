@@ -65,8 +65,8 @@ export default function UserReviewPage() {
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div className="p-4 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6 text-center">내가 작성한 리뷰</h1>
+    <div className="p-4 max-w-3xl mx-auto pt-20">
+      {/* <h1 className="text-2xl font-bold mb-6 text-center">내가 작성한 리뷰</h1> */}
       {reviews.length === 0 ? (
         <p>작성한 리뷰가 없습니다.</p>
       ) : (

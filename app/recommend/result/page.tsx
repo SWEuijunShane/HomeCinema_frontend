@@ -21,7 +21,7 @@ export default function RecommendResultPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-cover bg-center bg-fixed flex items-center justify-center px-4 py-10"
+      className="relative min-h-screen bg-cover bg-center bg-fixed flex items-center justify-center px-4 py-10 pt-20"
       style={{ backgroundImage: "url('/images/back.png')" }}
     >
       {/* 오버레이 */}

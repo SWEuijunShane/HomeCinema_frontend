@@ -55,8 +55,8 @@ export default function TastePage() {
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="p-4 max-w-5xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6 text-center">내 영화 취향 분석</h1>
+    <div className="p-4 max-w-5xl mx-auto pt-20">
+      {/* <h1 className="text-2xl font-bold mb-6 text-center">내 영화 취향 분석</h1> */}
 
       {taste && (
         <>

@@ -42,7 +42,7 @@ export default function PersonPageClient({ person }: { person: PersonDetail }) {
   const visibleMovies = allMovies.slice(0, visibleCount);
 
   return (
-    <main className="min-h-screen bg-gray-50 py-10 px-6 flex justify-center">
+    <main className="min-h-screen bg-gray-50 py-10 px-6 flex justify-center pt-20">
       <div className="max-w-3xl w-full bg-white p-6">
         {/* 인물 정보 */}
         <div className="flex flex-col md:flex-row gap-6">

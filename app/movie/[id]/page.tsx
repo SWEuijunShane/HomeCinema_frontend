@@ -44,9 +44,9 @@ export default async function Page({ params }: { params: { id: string } }) {
   if (!movie) return notFound();
 
   return (
-    <main className="min-h-screen bg-gray-50 py-10 px-6 flex justify-center">
+    <main className="min-h-screen bg-gray-50 py-10 px-6 flex justify-center pt-20">
       <div className="max-w-3xl w-full bg-white p-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">{movie.title}</h1>
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">{movie.title}</h1>
 
         <div className="flex flex-col md:flex-row gap-6">
           <img
@@ -77,7 +77,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div>
 
           <ReviewModalTrigger movieId={movieId} />
-          <MyReviewSection movieId={movieId} /> {/* ✅ 따로 만든 내 리뷰 섹션 */}
+          <MyReviewSection movieId={movieId} /> 
 
 
         </div>
