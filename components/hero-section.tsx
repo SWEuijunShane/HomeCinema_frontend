@@ -6,6 +6,7 @@ import { HeroHeader } from '@/components/hero8-header';
 import ThreeDModel from '@/components/ThreeDCube';
 import Features from "@/components/features-1";
 import MovieList from "@/components/MovieList";
+import { Footer } from "@/components/ui/footer";
 
 
 export default function HeroSection() {
@@ -59,6 +60,7 @@ export default function HeroSection() {
             <MovieList />
         </section>
       </main>
+      <Footer />
     </>
   );
 }

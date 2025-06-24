@@ -100,9 +100,9 @@ export const HeroHeader = () => {
         className="fixed top-0 z-20 w-full h-18 bg-background/50 border-b backdrop-blur-3xl"
       >
         <div className="mx-auto max-w-6xl px-6 transition-all duration-300">
-          <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
-            <div className="flex w-full items-center justify-between gap-12 lg:w-auto">
-              <a href="/" onClick={() => (window.location.href = "/")}>
+          <div className="relative flex flex-wrap items-center h-18 justify-between gap-6 py-3 lg:gap-0 lg:py-4">
+            <div className="flex w-full items-center h-full justify-between gap-12 lg:w-auto">
+              <a href="/" onClick={() => (window.location.href = "/")} className="flex items-center h-full">
                 <Image
                   src="/images/logo3.png"
                   alt="방구석시네마 로고"
