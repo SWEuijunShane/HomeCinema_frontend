@@ -181,6 +181,7 @@ export const HeroHeader = () => {
                       <li key={index}>
                         <Link
                           href={item.href}
+                          onClick={() => setMenuState(false)} 
                           className="text-muted-foreground hover:text-accent-foreground block duration-150"
                         >
                           <span>{item.name}</span>
@@ -199,7 +200,10 @@ export const HeroHeader = () => {
                   size="sm"
                   className="w-10 h-10 rounded-full p-0 flex items-center justify-center overflow-hidden"
                 >
-                  <Link href="/user/profile">
+                  <Link 
+                    href="/user/profile"
+                    onClick={() => setMenuState(false)} 
+                  >
                     <span suppressHydrationWarning>
                       {user?.profileImage ? (
                         <img src={user.profileImage} alt="프로필 이미지" className="w-full h-full object-cover" />

@@ -97,7 +97,7 @@ export default function RatingStars({ movieId }: Props) {
   };
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex flex-col items-end gap-1 sm:flex-row sm:items-center sm:gap-3">
       <div className="flex gap-0.5 select-none">{renderStars()}</div>
       <button
         onClick={handleEditToggle}

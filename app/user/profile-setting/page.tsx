@@ -66,8 +66,8 @@ export default function ProfileSettingPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto py-10 px-4">
-      <h1 className="text-xl font-bold mb-6 text-center">AI 프로필 설정</h1>
+    <div className="max-w-md mx-auto py-10 px-4 pt-20">
+      {/* <h1 className="text-xl font-bold mb-6 text-center">AI 프로필 설정</h1> */}
       
 
       <label className="block mb-2 text-sm font-medium text-gray-700">프로필 사진 업로드</label>

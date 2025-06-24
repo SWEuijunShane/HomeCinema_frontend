@@ -40,8 +40,7 @@ export default function OtherUserWantToWatchPage() {
   if (error) return <p className="text-red-500">{error}</p>
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">보고싶어요 목록</h1>
+    <div className="p-4 pt-20">
       {movies.length === 0 ? (
         <p>보고싶어요 목록이 비어 있습니다.</p>
       ) : (

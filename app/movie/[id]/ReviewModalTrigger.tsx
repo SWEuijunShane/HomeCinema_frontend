@@ -82,7 +82,7 @@ export default function ReviewModal({ movieId }: { movieId: number }) {
           </button>
         </div>
 
-        <div className="scale-150 mr-18">
+<div className="scale-125 sm:scale-150 sm:mr-12 flex justify-end">
           <RatingStars movieId={movieId} />
         </div>
       </div>

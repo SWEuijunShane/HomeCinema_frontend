@@ -56,8 +56,8 @@ export default function FriendActivityPage() {
   if (loading) return <p>불러오는 중...</p>;
 
   return (
-    <div className="p-4 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6 text-center">친구 소식</h1>
+    <div className="p-4 max-w-3xl mx-auto pt-20">
+      {/* <h1 className="text-2xl font-bold mb-6 text-center">친구 소식</h1> */}
       {activities.length === 0 ? (
         <p>최근 3일간 친구의 활동이 없습니다.</p>
       ) : (

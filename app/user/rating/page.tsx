@@ -57,16 +57,16 @@ export default function UserRatingPage() {
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div className="p-4 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6 text-center">별점별 내가 평가한 영화</h1>
+    <div className="p-4 max-w-4xl mx-auto pt-20">
+      {/* <h1 className="text-2xl font-bold mb-6 text-center">별점별 내가 평가한 영화</h1> */}
       {ratings.length === 0 ? (
         <p>아직 평점을 남긴 영화가 없습니다.</p>
       ) : (
         sortedRatings.map(([rating, movies]) => (
           <div key={rating} className="mb-8">
             <div className="flex justify-between items-center mb-2 border-b pb-1">
-              <h2 className="text-lg font-semibold">
-                ⭐ {rating}점 <span className="text-gray-500">({movies.length})</span>
+              <h2 className="text-xl font-semibold text-black/90">
+                🌟{rating}점 <span className="text-gray-500">({movies.length}개)</span>
               </h2>
             </div>
 <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
