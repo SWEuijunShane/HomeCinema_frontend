@@ -27,7 +27,7 @@ export default function HighRatedSection() {
       }
 
       try {
-        const res = await axios.get(`http://localhost:8080/api/taste/high-rated/me`, {
+        const res = await axios.get(`http://localhost:8080/api/taste/high-rated`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
