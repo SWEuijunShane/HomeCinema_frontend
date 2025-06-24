@@ -63,9 +63,12 @@ export default function ReviewModal({ movieId }: { movieId: number }) {
 
   return (
     <>
-      <div className="flex justify-between items-center mt-12 px-4">
-        <div className="flex gap-6">
-          <button onClick={() => setWriteModalOpen(true)}>
+      <div className="flex justify-between items-center mt-12 px-2">
+        <div className="flex gap-3 sm:gap-6 justify-start -ml-4 sm:-ml-0">          
+          <button 
+            onClick={() => setWriteModalOpen(true)}
+            className="flex flex-col items-center"
+          >
             <img
               src="/images/pen.png"
               alt="리뷰 작성"
@@ -73,7 +76,10 @@ export default function ReviewModal({ movieId }: { movieId: number }) {
             />
           </button>
 
-          <button onClick={isSaved ? handleRemove : handleAdd}>
+          <button 
+            onClick={isSaved ? handleRemove : handleAdd}
+            className="flex flex-col items-center"
+          >
             <img
               src={isSaved ? '/images/delete_eyes.png' : '/images/eyes.png'}
               alt="보고싶어요 토글"
@@ -82,7 +88,7 @@ export default function ReviewModal({ movieId }: { movieId: number }) {
           </button>
         </div>
 
-<div className="scale-125 sm:scale-150 sm:mr-12 flex justify-end">
+        <div className="scale-125 sm:scale-150 sm:mr-12 flex justify-end">
           <RatingStars movieId={movieId} />
         </div>
       </div>

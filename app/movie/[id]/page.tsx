@@ -67,7 +67,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               </p>
             )}
 
-            <p className="text-gray-800 leading-relaxed whitespace-pre-wrap">{movie.overview}</p>
+            <p className="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap">{movie.overview}</p>
           </div>
 
           

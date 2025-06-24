@@ -209,7 +209,7 @@ export default function StickerPage() {
         </p>
 
       <div className="text-center mb-5 space-y-2 flex justify-center">
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-6">
+        <div className="flex flex-row sm:flex-row justify-center items-center gap-4 mt-6">
         <button
             onClick={handleSaveImage}
             className="px-4 py-2 bg-[#F3344E] text-white rounded hover:bg-[#d72b40] transition"
