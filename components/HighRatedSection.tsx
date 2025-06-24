@@ -27,7 +27,7 @@ export default function HighRatedSection() {
       }
 
       try {
-        const res = await axios.get('http://localhost:8080/api/taste/high-rated', {
+        const res = await axios.get(`http://localhost:8080/api/taste/high-rated/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -53,7 +53,7 @@ export default function HighRatedSection() {
 
   return (
     <section className="mb-5">
-  <h2 className="text-xl font-bold">선호 영화</h2>
+  <h2 className="text-xl font-bold mb-5">선호 영화</h2>
       <div className="flex justify-center gap-6 flex-wrap">
         {movies.slice(0, 3).map((movie) => (
           <Link
