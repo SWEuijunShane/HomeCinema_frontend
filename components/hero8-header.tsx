@@ -102,7 +102,7 @@ export const HeroHeader = () => {
         <div className="mx-auto max-w-6xl px-6 transition-all duration-300">
           <div className="relative flex flex-wrap items-center h-18 justify-between gap-6 py-3 lg:gap-0 lg:py-4">
             <div className="flex w-full items-center h-full justify-between gap-12 lg:w-auto">
-            <Link href="/" >
+            <a href="/" >
                 <Image
                   src="/images/logo3.png"
                   alt="방구석시네마 로고"
@@ -110,7 +110,7 @@ export const HeroHeader = () => {
                   height={50}
                   className="h-auto w-auto"
                 />
-              </Link>
+              </a>
 
               <button
                 onClick={() => setMenuState(!menuState)}
