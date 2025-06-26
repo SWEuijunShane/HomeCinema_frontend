@@ -25,11 +25,6 @@ interface MovieDetail {
 
 export const dynamic = "force-dynamic"; // ✅ 동적 라우팅 명시
 
-interface MoviePageProps {
-  params: {
-    id: string;
-  };
-}
 
 async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
   try {
@@ -44,9 +39,9 @@ async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
   }
 }
 
-export default async function Page({ params }: MoviePageProps) {
+export default async function Page({ params }: { params: { id: string } }) {
   const movie = await fetchMovieDetail(params.id);
-  const movieId = Number(params.id);  // 🔥 여기 중요
+  const movieId = Number(params.id);
 
 
   if (!movie) return notFound();
