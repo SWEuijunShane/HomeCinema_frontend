@@ -24,27 +24,39 @@ export default function MyReviewSection({ movieId }: { movieId: number }) {
   useEffect(() => {
     if (!accessToken) return;
 
-    const fetchMyReview = async () => {
-      try {
-        const res = await fetch(`http://localhost:8080/api/reviews/my/${movieId}`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-          },
-        });
-        if (!res.ok) {
-          console.warn('내 리뷰 조회 실패:', res.status);
-          return;
-        }
-        const data = await res.json();
-        setMyReview(data);
-      } catch (err) {
-        console.error('내 리뷰 불러오기 실패:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+const fetchMyReview = async () => {
+  try {
+    const res = await fetch(`http://localhost:8080/api/reviews/my/${movieId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!res.ok) {
+      console.warn('내 리뷰 조회 실패:', res.status);
+      setMyReview(null);
+      return;
+    }
+
+    const text = await res.text();
+    if (!text) {
+      // 응답 body가 비어있을 때
+      setMyReview(null);
+      return;
+    }
+
+    const data: ReviewDetailDto = JSON.parse(text);
+    setMyReview(data);
+  } catch (err) {
+    console.error('내 리뷰 불러오기 실패:', err);
+    setMyReview(null); // 실패해도 안전하게 null로
+  } finally {
+    setLoading(false);
+  }
+};
+
 
     fetchMyReview();
   }, [movieId, accessToken]);

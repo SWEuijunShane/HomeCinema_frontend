@@ -29,7 +29,7 @@ interface TasteProfileSectionProps {
 export default function TasteProfileSection({ taste, isMyProfile }: TasteProfileSectionProps) {
   return (
     <>
-      <section className="mb-2 p-6 border border-gray-100 rounded-xs bg-white shadow-sm max-w-2xl mx-auto">
+      <section className="mb-2 p-6 border border-gray-100 rounded-xs bg-white shadow-xs max-w-2xl mx-auto">
         <h2 className="text-xl font-bold">선호 배우</h2>
         <div className="flex flex-col divide-y divide-gray-200">
           {taste.topActors.slice(0, 3).map((actor) => (
@@ -50,7 +50,7 @@ export default function TasteProfileSection({ taste, isMyProfile }: TasteProfile
                     <div className="w-full h-full flex items-center justify-center text-white">?</div>
                   )}
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col text-start">
                   <p className="text-[15px] font-semibold text-gray-900">{actor.name}</p>
                   <p className="text-sm text-gray-500">{actor.count}회</p>
                 </div>
@@ -80,7 +80,7 @@ export default function TasteProfileSection({ taste, isMyProfile }: TasteProfile
                     <div className="w-full h-full flex items-center justify-center text-white">?</div>
                   )}
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col text-start">
                   <p className="text-[15px] font-semibold text-gray-900">{director.name}</p>
                   <p className="text-sm text-gray-500">{director.count}회</p>
                 </div>
@@ -91,7 +91,7 @@ export default function TasteProfileSection({ taste, isMyProfile }: TasteProfile
         </div>
       </section>
 
-      <section className="mb-10 p-6 border border-gray-100 rounded-xs bg-white shadow-sm max-w-2xl mx-auto">
+      <section className="mb-10 p-6 border border-gray-100 rounded-xs bg-white shadow-xs max-w-2xl mx-auto">
         {isMyProfile ? <HighRatedSection /> : <OtherUserHighRatedSection />}
         <section className="mb-5">
           <h2 className="text-xl font-bold mb-5">선호 장르</h2>
