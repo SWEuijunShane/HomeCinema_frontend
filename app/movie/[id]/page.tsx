@@ -23,8 +23,6 @@ interface MovieDetail {
   cast?: PersonSummary[];
 }
 
-type PageParams = Promise<{ id: string }>;
-
 
 async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
   try {
@@ -39,8 +37,8 @@ async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
   }
 }
 
-export default async function Page({ params }: { params: PageParams }) {
-  const { id } = await params;
+export default async function Page({ params }: { params: { id: string } }) {
+  const { id } = params;
   const movie = await fetchMovieDetail(id);
   const movieId = Number(id);
 
