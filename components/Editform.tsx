@@ -31,8 +31,13 @@ export default function EditProfileForm({ onSuccess }: { onSuccess: () => void }
 
       alert("회원 정보가 수정되었습니다.")
       onSuccess()
-    } catch (error: any) {
-      alert(error?.response?.data || "회원 정보 수정 실패")
+    } catch (error: unknown) {
+      if (error && typeof error === "object" && "response" in error) {
+        const err = error as { response?: { data?: string } }
+        alert(err.response?.data || "회원 정보 수정 실패")
+      } else {
+        alert("회원 정보 수정 실패")
+      }
     }
   }
 

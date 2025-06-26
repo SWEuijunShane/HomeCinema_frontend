@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import axios from 'axios';
 import Link from 'next/link';
 
@@ -15,7 +15,7 @@ interface RatedMovieForAi {
 
 export default function HighRatedSection() {
   const { id } = useParams();
-  const router = useRouter();
+  //const router = useRouter();
   const [movies, setMovies] = useState<RatedMovieForAi[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

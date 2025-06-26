@@ -112,7 +112,7 @@ export default function OtherUserProfilePage() {
   if (!user) return <p>유저 정보를 불러오지 못했습니다.</p>;
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow pt-20 pb-20 text-center">
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white pt-20 pb-20 text-center">
       <img
         src={user.profileImageUrl || '/images/default-profile.png'}
         alt="프로필 이미지"

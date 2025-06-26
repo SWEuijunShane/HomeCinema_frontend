@@ -19,7 +19,7 @@ interface Movie {
 
 const MovieCoverflow: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [query, setQuery] = useState('');
+  const [query, ] = useState('');
   const [selectedTitle, setSelectedTitle] = useState('요즘 인기 🔥');
   const router = useRouter();
   const searchParams = useSearchParams();

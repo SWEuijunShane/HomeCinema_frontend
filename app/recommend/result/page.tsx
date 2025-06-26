@@ -3,8 +3,26 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+interface Movie {
+  title: string;
+  release_date: string;
+  poster_path: string | null;
+}
+
+interface RecommendationItem {
+  movie: Movie;
+}
+
+interface RecommendationResult {
+  reason?: string;
+  recommendations: RecommendationItem[];
+}
+
+
+
 export default function RecommendResultPage() {
-  const [result, setResult] = useState<any>(null);
+const [result, setResult] = useState<RecommendationResult | null>(null);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -41,7 +59,7 @@ export default function RecommendResultPage() {
 
             {/* 카드 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
-              {result.recommendations.map((item: any, idx: number) => (
+              {result.recommendations.map((item, idx) => (
                 <div
                   key={idx}
                   className="bg-white text-black p-4 rounded-lg shadow-lg hover:scale-105 transition-transform w-full max-w-xs"

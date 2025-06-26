@@ -28,7 +28,7 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="w-full bg-black text-foreground border-t border-black">
+    <footer className="w-full bg-[#141414] text-foreground border-t border-black">
       <div className="max-w-screen-xl mx-auto px-4 py-10 space-y-8">
 
         {/* ⭐ 총 평점 수 표시 */}

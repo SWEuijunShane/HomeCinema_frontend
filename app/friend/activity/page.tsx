@@ -12,7 +12,7 @@ interface FriendActivity {
   movieId?: number;
   movieTitle?: string;
   moviePosterPath?: string;
-  movieYear?: String;
+  movieYear?: string;
   reviewContent?: string;
   rating?: number;
   emotions?: string[];

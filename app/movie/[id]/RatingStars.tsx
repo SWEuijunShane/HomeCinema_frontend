@@ -7,6 +7,11 @@ interface Props {
   movieId: number;
 }
 
+interface MovieRating {
+  movieId: number;
+  rating: number;
+}
+
 export default function RatingStars({ movieId }: Props) {
   const [rating, setRating] = useState<number>(0);
   const [token, setToken] = useState<string | null>(null);
@@ -15,7 +20,6 @@ export default function RatingStars({ movieId }: Props) {
   useEffect(() => {
     const storedToken = localStorage.getItem('accessToken');
     setToken(storedToken);
-
     fetchRating(storedToken);
   }, [movieId]);
 
@@ -27,9 +31,9 @@ export default function RatingStars({ movieId }: Props) {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 
-      const found = res.data.find((item: any) => item.movieId === movieId);
-      if (found) setRating(found.rating);
-      else setRating(0);
+      const ratings: MovieRating[] = res.data;
+      const found = ratings.find((item) => item.movieId === movieId);
+      setRating(found ? found.rating : 0);
     } catch (err) {
       console.error('내 평점 불러오기 실패:', err);
     }
@@ -63,7 +67,6 @@ export default function RatingStars({ movieId }: Props) {
 
       stars.push(
         <span key={i} className="relative w-6 h-6 inline-block">
-          {/* 클릭 영역 */}
           {editMode && (
             <>
               <span
@@ -77,7 +80,6 @@ export default function RatingStars({ movieId }: Props) {
             </>
           )}
 
-          {/* 별 출력 */}
           {full ? (
             <span className="text-yellow-400 text-2xl">★</span>
           ) : half ? (

@@ -17,6 +17,12 @@ interface TasteProfile {
   topDirectors: string[];
 }
 
+interface TasteResponseItem {
+  name: string;
+}
+
+
+
 const keywordSteps: { question: string; options: Option[] }[] = [
   {
     question: '어떤 영화를 보고싶으신가요?',
@@ -67,7 +73,7 @@ export default function RecommendPage() {
   const [selected, setSelected] = useState<string | null>(null);
   const [showTeaser, setShowTeaser] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [taste, setTaste] = useState<TasteProfile | null>(null);
+  const [, ] = useState<TasteProfile | null>(null);
 
   const isKeywordMode = mode === 'keyword';
   const current = isKeywordMode ? keywordSteps[step - 1] : null;
@@ -98,10 +104,11 @@ export default function RecommendPage() {
 
       const raw = res.data;
       const parsedTaste = {
-        topGenres: raw.topGenres.map((g: any) => g.name),
-        topActors: raw.topActors.map((a: any) => a.name),
-        topDirectors: raw.topDirectors.map((d: any) => d.name),
+        topGenres: (raw.topGenres as TasteResponseItem[]).map((g) => g.name),
+        topActors: (raw.topActors as TasteResponseItem[]).map((a) => a.name),
+        topDirectors: (raw.topDirectors as TasteResponseItem[]).map((d) => d.name),
       };
+
 
       const recommendRes = await axios.post(
         'http://localhost:8080/api/recommend',

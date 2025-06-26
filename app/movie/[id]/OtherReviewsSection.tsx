@@ -77,6 +77,7 @@ export default function OtherReviewsSection({ movieId }: { movieId: number }) {
 
             if (!res.ok) {
                 const errorMessage = await res.text(); // ← 백에서 보낸 메시지 받기
+                console.log(errorMessage)
                 alert("댓글을 입력해주세요."); // ❗ 사용자에게 에러 보여주기
                 return;
             }
