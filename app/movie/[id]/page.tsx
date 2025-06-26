@@ -23,7 +23,6 @@ interface MovieDetail {
   cast?: PersonSummary[];
 }
 
-
 async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
   try {
     const res = await fetch(`http://localhost:8080/api/tmdb/movie/${id}`, {
