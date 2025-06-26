@@ -23,7 +23,7 @@ interface MovieDetail {
   cast?: PersonSummary[];
 }
 
-export const dynamic = "force-dynamic"; // ✅ 동적 라우팅 명시
+type PageParams = Promise<{ id: string }>;
 
 
 async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
@@ -39,10 +39,10 @@ async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
   }
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const movie = await fetchMovieDetail(params.id);
-  const movieId = Number(params.id);
-
+export default async function Page({ params }: { params: PageParams }) {
+  const { id } = await params;
+  const movie = await fetchMovieDetail(id);
+  const movieId = Number(id);
 
   if (!movie) return notFound();
 
