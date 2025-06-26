@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import customAxios from "@/lib/axios";
 import Profile from "@/components/profile";
-import { Button } from "@/components/ui/button";
+//import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import EditProfileForm from "@/components/EditProfileForm"; // EditProfileForm

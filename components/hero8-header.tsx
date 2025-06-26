@@ -42,8 +42,8 @@ export const HeroHeader = () => {
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null)
   const router = useRouter()
 
-  const [movies, setMovies] = React.useState<Movie[]>([])
-  const [people, setPeople] = React.useState<Person[]>([])
+  const [, setMovies] = React.useState<Movie[]>([])
+  const [, setPeople] = React.useState<Person[]>([])
   const [user, setUser] = React.useState<User | null>(null)
   const [menuState, setMenuState] = React.useState(false)
 
@@ -102,7 +102,7 @@ export const HeroHeader = () => {
         <div className="mx-auto max-w-6xl px-6 transition-all duration-300">
           <div className="relative flex flex-wrap items-center h-18 justify-between gap-6 py-3 lg:gap-0 lg:py-4">
             <div className="flex w-full items-center h-full justify-between gap-12 lg:w-auto">
-              <a href="/" onClick={() => (window.location.href = "/")} className="flex items-center h-full">
+            <Link href="/" >
                 <Image
                   src="/images/logo3.png"
                   alt="방구석시네마 로고"
@@ -110,7 +110,7 @@ export const HeroHeader = () => {
                   height={50}
                   className="h-auto w-auto"
                 />
-              </a>
+              </Link>
 
               <button
                 onClick={() => setMenuState(!menuState)}
