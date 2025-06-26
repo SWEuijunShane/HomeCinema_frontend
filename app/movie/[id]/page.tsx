@@ -23,6 +23,12 @@ interface MovieDetail {
   cast?: PersonSummary[];
 }
 
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
 async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
   try {
     const res = await fetch(`http://localhost:8080/api/tmdb/movie/${id}`, {
@@ -36,9 +42,9 @@ async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
   }
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: PageProps) {
   const movie = await fetchMovieDetail(params.id);
-    const movieId = Number(params.id);  // 🔥 여기 중요
+  const movieId = Number(params.id);  // 🔥 여기 중요
 
 
   if (!movie) return notFound();
