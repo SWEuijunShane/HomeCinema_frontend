@@ -25,7 +25,7 @@ interface MovieDetail {
 
 async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
   try {
-    const res = await fetch(`http://localhost:8080/api/tmdb/movie/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tmdb/movie/${id}`, {
       cache: 'no-store',
     });
     if (!res.ok) return null;

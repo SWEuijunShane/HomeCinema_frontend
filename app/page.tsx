@@ -37,7 +37,7 @@ export default function Page() {
 
     // ✅ 백엔드에 유효성 확인
     axios
-      .get("http://localhost:8080/api/user/validate", {
+      .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/validate`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

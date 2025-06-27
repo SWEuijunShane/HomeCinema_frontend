@@ -28,7 +28,7 @@ export default function FriendActivityPage() {
     const fetchActivities = async () => {
       try {
         const token = localStorage.getItem('accessToken');
-        const res = await axios.get('http://localhost:8080/api/friendActivity/recent', {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/friendActivity/recent`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setActivities(res.data);

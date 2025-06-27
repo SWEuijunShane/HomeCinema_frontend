@@ -28,7 +28,7 @@ export default function FollowListPage({ userId }: { userId?: string }) {
         if (!token) return
 
         const headers = { Authorization: `Bearer ${token}` }
-        const baseUrl = 'http://localhost:8080/api/follow'
+        const baseUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/follow`
 
         const followingsUrl = isMyPage ? `${baseUrl}/me_followings` : `${baseUrl}/${userId}/followings`
         const followersUrl = isMyPage ? `${baseUrl}/me_followers` : `${baseUrl}/${userId}/followers`

@@ -10,7 +10,7 @@ export function Footer() {
     const fetchRatingCount = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-        const res = await fetch("http://localhost:8080/api/movieRating/count", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/movieRating/count`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

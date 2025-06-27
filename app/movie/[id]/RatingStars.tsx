@@ -27,7 +27,7 @@ export default function RatingStars({ movieId }: Props) {
     if (!authToken) return;
 
     try {
-      const res = await axios.get('http://localhost:8080/api/movieRating/me', {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/movieRating/me`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 
@@ -44,7 +44,7 @@ export default function RatingStars({ movieId }: Props) {
     if (!token) return;
 
     try {
-      await axios.post(`http://localhost:8080/api/movieRating/${movieId}`, null, {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/movieRating/${movieId}`, null, {
         params: { rating: value },
         headers: { Authorization: `Bearer ${token}` },
       });

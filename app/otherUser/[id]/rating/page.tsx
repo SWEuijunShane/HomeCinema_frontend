@@ -22,7 +22,7 @@ export default function OtherUserRatingPage() {
   useEffect(() => {
     const fetchRatings = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/api/movieRating/${id}`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/movieRating/${id}`);
         setRatings(res.data);
       } catch (err) {
         console.error('유저 평점 정보 로딩 실패:', err);

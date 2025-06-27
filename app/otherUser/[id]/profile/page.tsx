@@ -55,7 +55,7 @@ export default function OtherUserProfilePage() {
     const fetchUserProfile = async () => {
       try {
         const token = localStorage.getItem('accessToken');
-        const res = await axios.get(`http://localhost:8080/api/user/${id}`, {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -95,7 +95,7 @@ export default function OtherUserProfilePage() {
         const token = localStorage.getItem('accessToken');
         if (!token || !id) return;
 
-        const res = await axios.get(`http://localhost:8080/api/taste/${id}`, {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/taste/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTaste(res.data);

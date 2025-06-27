@@ -98,7 +98,7 @@ export default function RecommendPage() {
       const token = localStorage.getItem('accessToken');
       if (!token) throw new Error('토큰이 없습니다.');
 
-      const res = await axios.get('http://localhost:8080/api/taste/me', {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/taste/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -111,7 +111,7 @@ export default function RecommendPage() {
 
 
       const recommendRes = await axios.post(
-        'http://localhost:8080/api/recommend',
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/recommend`,
         { choices: [], taste: parsedTaste },
         {
           headers: {
@@ -146,7 +146,7 @@ export default function RecommendPage() {
         if (!token) throw new Error('토큰이 없습니다.');
 
         const res = await axios.post(
-          'http://localhost:8080/api/recommend',
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/recommend`,
           {
             choices: newAnswers,
             taste: null,

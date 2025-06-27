@@ -14,7 +14,7 @@ export default function UploadProfileImage({ onUploadSuccess }: { onUploadSucces
     formData.append("file", file)
 
     try {
-      const res = await axios.post("http://localhost:8080/api/user/upload-profile", formData, {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/upload-profile`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

@@ -20,7 +20,7 @@ export default function FollowButton({ userId }: FollowButtonProps) {
         if (!token) return
 
         const res = await axios.get<{ id: number }>(
-          'http://localhost:8080/api/user/me',
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/me`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -42,7 +42,7 @@ export default function FollowButton({ userId }: FollowButtonProps) {
         if (!token || myId === null || myId === userId) return
 
         const res = await axios.get<boolean>(
-          `http://localhost:8080/api/follow/check/${userId}`,
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/follow/check/${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -69,12 +69,12 @@ export default function FollowButton({ userId }: FollowButtonProps) {
     setLoading(true)
     try {
       if (isFollowing) {
-        await axios.delete(`http://localhost:8080/api/follow/${userId}`, {
+        await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/follow/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         setIsFollowing(false)
       } else {
-        await axios.post(`http://localhost:8080/api/follow/${userId}`, null, {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/follow/${userId}`, null, {
           headers: { Authorization: `Bearer ${token}` },
         })
         setIsFollowing(true)

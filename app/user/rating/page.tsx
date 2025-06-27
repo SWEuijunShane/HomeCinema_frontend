@@ -26,7 +26,7 @@ export default function UserRatingPage() {
           return;
         }
 
-        const res = await axios.get('http://localhost:8080/api/movieRating/me', {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/movieRating/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

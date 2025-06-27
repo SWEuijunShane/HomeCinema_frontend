@@ -31,7 +31,7 @@ export default function OtherReviewsSection({ movieId }: { movieId: number }) {
         const fetchReviews = async () => {
             try {
                 const token = localStorage.getItem('accessToken');
-                const res = await fetch(`http://localhost:8080/api/reviews/movie/${movieId}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/reviews/movie/${movieId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`, // ❗ 이게 없으면 401 에러 뜸
                     },
@@ -63,7 +63,7 @@ export default function OtherReviewsSection({ movieId }: { movieId: number }) {
     const handleCommentSubmit = async (reviewId: number) => {
         try {
             const token = localStorage.getItem('accessToken');
-            const res = await fetch(`http://localhost:8080/api/comment`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/comment`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ export default function OtherReviewsSection({ movieId }: { movieId: number }) {
     const handleLikeToggle = async (reviewId: number, liked: boolean) => {
         try {
             const method = liked ? 'DELETE' : 'POST';
-            const res = await fetch(`http://localhost:8080/api/reviewLike/${reviewId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/reviewLike/${reviewId}`, {
                 method,
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

@@ -26,7 +26,7 @@ export default function MyReviewSection({ movieId }: { movieId: number }) {
 
 const fetchMyReview = async () => {
   try {
-    const res = await fetch(`http://localhost:8080/api/reviews/my/${movieId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/reviews/my/${movieId}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${accessToken}`,

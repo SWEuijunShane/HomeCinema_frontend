@@ -13,7 +13,7 @@ export default function EditProfileForm({ onSuccess }: { onSuccess: () => void }
     e.preventDefault()
 
     try {
-      await axios.put("http://localhost:8080/api/user/edit", {
+      await axios.put(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/edit`, {
         nickname,
         profileImage,
       }, {

@@ -54,7 +54,7 @@ export const HeroHeader = () => {
       return
     }
     try {
-      const res = await axios.get<{ movies: Movie[]; people: Person[] }>('http://localhost:8080/api/tmdb/search', {
+      const res = await axios.get<{ movies: Movie[]; people: Person[] }>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tmdb/search`, {
         params: { query },
       })
       setMovies(res.data.movies || [])
@@ -81,7 +81,7 @@ export const HeroHeader = () => {
       const token = localStorage.getItem("accessToken")
       if (!token) return
       try {
-        const res = await axios.get("http://localhost:8080/api/user/me", {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/me`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         setUser(res.data)
@@ -217,7 +217,7 @@ export const HeroHeader = () => {
                 <button
                   onClick={async () => {
                     try {
-                      await axios.post("http://localhost:8080/api/user/logout", {}, {
+                      await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/logout`, {}, {
                         headers: {
                           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                         },

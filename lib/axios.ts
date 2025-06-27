@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const instance = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL ,
 })
 
 // ✅ 요청 인터셉터: accessToken 붙이기
@@ -26,7 +26,7 @@ instance.interceptors.response.use(
 
       try {
         const refreshToken = localStorage.getItem("refreshToken")
-        const res = await axios.post("http://localhost:8080/api/user/reissue", {
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/reissue`, {
           refreshToken,
         })
 

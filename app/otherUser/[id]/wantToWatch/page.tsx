@@ -23,7 +23,7 @@ export default function OtherUserWantToWatchPage() {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/api/userMovie/${id}/wantToWatch`)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/userMovie/${id}/wantToWatch`)
         setMovies(res.data)
       } catch (err) {
         console.error('보고싶어요 목록 불러오기 실패:', err)

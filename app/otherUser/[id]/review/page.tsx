@@ -26,7 +26,7 @@ export default function OtherUserReviewPage() {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/api/reviews/list/${id}`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/reviews/list/${id}`);
         setReviews(res.data);
       } catch (err) {
         console.error('리뷰 정보 로딩 실패:', err);

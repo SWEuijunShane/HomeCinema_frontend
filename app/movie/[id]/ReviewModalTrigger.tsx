@@ -21,7 +21,7 @@ export default function ReviewModal({ movieId }: { movieId: number }) {
     const checkSaved = async () => {
       if (!token) return;
       try {
-        const res = await axios.get(`http://localhost:8080/api/userMovie/me/wantToWatch/${movieId}`, {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/userMovie/me/wantToWatch/${movieId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setIsSaved(res.data); // true or false
@@ -36,7 +36,7 @@ export default function ReviewModal({ movieId }: { movieId: number }) {
   const handleAdd = async () => {
     if (!token) return alert('로그인이 필요합니다.');
     try {
-      await axios.post(`http://localhost:8080/api/userMovie/${movieId}`, null, {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/userMovie/${movieId}`, null, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert('보고싶어요에 추가했어요!');
@@ -50,7 +50,7 @@ export default function ReviewModal({ movieId }: { movieId: number }) {
   const handleRemove = async () => {
     if (!token) return alert('로그인이 필요합니다.');
     try {
-      await axios.delete(`http://localhost:8080/api/userMovie/${movieId}`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/userMovie/${movieId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert('보고싶어요에서 제거했어요!');

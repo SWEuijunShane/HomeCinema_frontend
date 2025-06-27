@@ -47,7 +47,7 @@ export default function ReviewDetailPage() {
       try {
         const token = localStorage.getItem('accessToken');
 
-        const reviewRes = await axios.get(`http://localhost:8080/api/reviews/${id}`, {
+        const reviewRes = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/reviews/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const reviewData = reviewRes.data;
@@ -70,7 +70,7 @@ export default function ReviewDetailPage() {
 
   const handleCommentSubmit = async () => {
     const token = localStorage.getItem('accessToken');
-    const res = await fetch(`http://localhost:8080/api/comment`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/comment`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ export default function ReviewDetailPage() {
   // ✅ 댓글 수정 핸들러
   const handleCommentEdit = async (commentId: number) => {
     const token = localStorage.getItem('accessToken');
-    const res = await fetch(`http://localhost:8080/api/comment/${commentId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/comment/${commentId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ export default function ReviewDetailPage() {
   if (!confirmDelete) return;
 
   const token = localStorage.getItem('accessToken');
-  const res = await fetch(`http://localhost:8080/api/comment/${commentId}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/comment/${commentId}`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -141,7 +141,7 @@ export default function ReviewDetailPage() {
   const handleToggleCommentLike = async (commentId: number, liked: boolean) => {
     const token = localStorage.getItem('accessToken');
     const method = liked ? 'DELETE' : 'POST';
-    const res = await fetch(`http://localhost:8080/api/commentLike/${commentId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/commentLike/${commentId}`, {
       method,
       headers: { Authorization: `Bearer ${token}` },
     });

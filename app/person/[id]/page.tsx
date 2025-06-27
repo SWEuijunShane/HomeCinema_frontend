@@ -25,7 +25,7 @@ interface PersonDetail {
 
 async function fetchPersonDetail(id: string): Promise<PersonDetail | null> {
   try {
-    const res = await fetch(`http://localhost:8080/api/tmdb/person/${id}`, { cache: 'no-store' });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tmdb/person/${id}`, { cache: 'no-store' });
     if (!res.ok) return null;
     return await res.json();
   } catch (err) {

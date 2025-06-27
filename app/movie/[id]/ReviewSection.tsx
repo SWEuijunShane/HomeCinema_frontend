@@ -58,7 +58,7 @@ export default function ReviewSection({ movieId, onReviewUpdated }: Props) {
 
       setIsLoading(true);
       try {
-        const res = await axios.get(`http://localhost:8080/api/reviews/my/${movieId}`, {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/reviews/my/${movieId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -108,13 +108,13 @@ export default function ReviewSection({ movieId, onReviewUpdated }: Props) {
 
     try {
       if (reviewData) {
-        await axios.put(`http://localhost:8080/api/reviews/${movieId}`, payload, {
+        await axios.put(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/reviews/${movieId}`, payload, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert('리뷰가 수정되었습니다!');
         window.location.href = '/';
       } else {
-        await axios.post(`http://localhost:8080/api/reviews/create`, payload, {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/reviews/create`, payload, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert('리뷰가 작성되었습니다!');
@@ -139,7 +139,7 @@ export default function ReviewSection({ movieId, onReviewUpdated }: Props) {
     if (!ok) return;
 
     try {
-      await axios.delete(`http://localhost:8080/api/reviews/${movieId}`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/reviews/${movieId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert('리뷰가 삭제되었습니다!');
