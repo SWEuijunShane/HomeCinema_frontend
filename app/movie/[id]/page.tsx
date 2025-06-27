@@ -23,12 +23,6 @@ interface MovieDetail {
   cast?: PersonSummary[];
 }
 
-// ✅ 추가: props 타입 정의
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
 
 async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
   try {
@@ -43,7 +37,7 @@ async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
   }
 }
 
-export default async function Page({params}: PageProps) {
+export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params; 
   const movie = await fetchMovieDetail(id);
   const movieId = Number(id);
