@@ -1,10 +1,15 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { LoginForm } from "@/components/login-form"
 
 export default function Page() {
   const [, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+  console.log("✅ API URL:", process.env.NEXT_PUBLIC_API_BASE_URL);
+}, []);
+
 
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
