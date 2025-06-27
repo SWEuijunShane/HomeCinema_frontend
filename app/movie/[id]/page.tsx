@@ -38,7 +38,7 @@ async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const { id } = params; 
+   const { id } = params;
   const movie = await fetchMovieDetail(id);
   const movieId = Number(id);
 
