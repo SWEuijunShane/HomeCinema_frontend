@@ -21,7 +21,7 @@ type Badge = {
   name: string;
 };
 
-export default function ProfilePage() {
+export default function ClientProfilePage() {
   const [user, setUser] = useState<UserInfo | null>(null);
   const [isEditing, setIsEditing] = useState(false); // 내 프로필 설정에 대한 편집 상태
   const [isProfileEditing, setIsProfileEditing] = useState(false); // 회원수정에 대한 편집 상태
