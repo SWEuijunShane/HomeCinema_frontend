@@ -36,7 +36,7 @@ async function fetchMovieDetail(id: string): Promise<MovieDetail | null> {
   }
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }) {
   const id = params.id;
   const movie = await fetchMovieDetail(id);
   const movieId = Number(id);
