@@ -4,7 +4,6 @@ export const dynamic = "force-dynamic";
 import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import heic2any from 'heic2any';
 
 export default function ProfileSettingPage() {
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -19,6 +18,7 @@ export default function ProfileSettingPage() {
     // ✅ [2] HEIC 파일이면 변환
     if (file.type === "image/heic" || file.name.toLowerCase().endsWith(".heic")) {
       try {
+        const heic2any = (await import('heic2any')).default;  // ← ✅ 이렇게!
         const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg" }) as Blob;
         file = new File([convertedBlob], file.name.replace(/\.heic$/, ".jpg"), {
           type: "image/jpeg",
