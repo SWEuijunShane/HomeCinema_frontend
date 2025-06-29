@@ -1,12 +1,27 @@
 import { useState } from "react"
 import axios from "axios"
+import heic2any from "heic2any"
 
 export default function UploadProfileImage({ onUploadSuccess }: { onUploadSuccess: (url: string) => void }) {
   const [preview, setPreview] = useState<string | null>(null)
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    let file = e.target.files?.[0]
     if (!file) return
+
+    // ✅ [2] HEIC 확장자일 경우 변환 처리
+    if (file.type === "image/heic" || file.name.toLowerCase().endsWith(".heic")) {
+      try {
+        const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg" }) as Blob
+        file = new File([convertedBlob], file.name.replace(/\.heic$/, ".jpg"), {
+          type: "image/jpeg",
+        })
+      } catch (err) {
+        alert("HEIC 이미지를 변환하는 데 실패했어요.")
+        console.error("HEIC 변환 오류:", err)
+        return
+      }
+    }
 
     setPreview(URL.createObjectURL(file))
 
