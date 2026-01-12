@@ -49,7 +49,7 @@ export default function ProfileSettingPage() {
       const formData = new FormData();
       formData.append('file', imageFile);
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/emoji/generate`, {
+      const res = await fetch(`/api/emoji/generate`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,

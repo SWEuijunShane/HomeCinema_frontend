@@ -20,7 +20,7 @@
 //   useEffect(() => {
 //     if (id) {
 //       axios
-//         .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tmdb/movie/${id}`)
+//         .get(`/api/tmdb/movie/${id}`)
 //         .then((res) => setMovie(res.data))
 //         .catch((err) => console.error('영화 디테일 호출 실패:', err));
 //     }

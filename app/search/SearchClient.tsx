@@ -47,7 +47,7 @@ export default function SearchPage() {
         if (!token) return
 
         const res = await axios.get<{ id: number }>(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/me`,
+          `/api/user/me`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -74,7 +74,7 @@ export default function SearchPage() {
           movies: Movie[]
           people: Person[]
           users: User[]
-        }>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tmdb/search`, {
+        }>(`/api/tmdb/search`, {
           params: { query },
         })
         console.log('🔍 users:', res.data.users);

@@ -227,7 +227,7 @@ export default function ClientProfilePage() {
                       if (!confirmDelete) return;
 
                       try {
-                        await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/delete`, {
+                        await axios.delete(`/api/user/delete`, {
                           headers: {
                             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                           },

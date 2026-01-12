@@ -7,7 +7,7 @@ export default function Page() {
   const [, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
-  console.log("✅ API URL:", process.env.NEXT_PUBLIC_API_BASE_URL);
+  console.log("✅ API URL:", );
 }, []);
 
 

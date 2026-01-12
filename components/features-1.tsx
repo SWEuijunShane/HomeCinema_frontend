@@ -36,7 +36,7 @@ export default function Features() {
       return;
     }
     try {
-      const res = await axios.get<{ movies: Movie[]; people: Person[] }>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tmdb/search`, {
+      const res = await axios.get<{ movies: Movie[]; people: Person[] }>(`/api/tmdb/search`, {
         params: { query },
       });
       setMovies(res.data.movies || []);
