@@ -1,10 +1,10 @@
 import axios from "axios"
 
 const instance = axios.create({
-  baseURL:  ,
+  withCredentials: true,
 })
 
-// ✅ 요청 인터셉터: accessToken 붙이기
+// 요청 인터셉터: accessToken 붙이기
 instance.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken")
   if (token) {
@@ -13,7 +13,7 @@ instance.interceptors.request.use((config) => {
   return config
 })
 
-// ✅ 응답 인터셉터: accessToken 만료 시 → refreshToken으로 재요청
+// 응답 인터셉터: accessToken 만료 시 → refreshToken으로 재요청
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
